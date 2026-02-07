@@ -3,136 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>三国志AI 議論の間</title>
+    <title>三国志BBS - 乱世の匿名掲示板</title>
     <style>
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
+            background-color: #1e1e1e;
+            color: #dcdcdc;
+            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
             margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
+            padding: 0;
         }
-        #container {
-            width: 100%;
-            max-width: 600px;
-        }
-        h1 {
-            text-align: center;
-            color: #ffd700;
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-        }
-        .post {
-            background-color: #2d2d2d;
-            border-radius: 12px;
+        header {
+            background-color: #b22222; /* 魏の赤 */
             padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            border-left: 5px solid #555;
-            opacity: 0;
-            animation: fadeIn 0.5s forwards;
+            text-align: center;
+            border-bottom: 4px solid #ffd700;
         }
-        /* 曹操用のスタイル */
-        .post.cao_cao {
-            border-left-color: #4a90e2; /* 青 (魏) */
-            background-color: #202833;
+        h1 { margin: 0; font-size: 1.5em; color: #fff; }
+        
+        #main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
         }
-        /* 劉備用のスタイル */
-        .post.liu_bei {
-            border-left-color: #e24a4a; /* 赤 (蜀) */
-            background-color: #332020;
+
+        /* スレッドカードのデザイン */
+        .thread-card {
+            background-color: #2d2d2d;
+            border: 1px solid #444;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
-        .header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
+        .thread-header {
+            background-color: #383838;
+            padding: 15px;
+            border-bottom: 1px solid #555;
         }
-        .icon {
-            font-size: 24px;
-            margin-right: 10px;
-        }
-        .name {
+        .thread-title {
+            font-size: 1.2em;
             font-weight: bold;
-            font-size: 1.1em;
+            color: #87ceeb; /* スレタイ色 */
+            margin-bottom: 5px;
         }
-        .time {
-            margin-left: auto;
+        .thread-meta {
             font-size: 0.8em;
             color: #888;
         }
-        .content {
+
+        /* レスのデザイン */
+        .res-container {
+            padding: 15px;
+        }
+        .res {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #444;
+            padding-bottom: 15px;
+        }
+        .res:last-child { border-bottom: none; }
+        
+        .res-header {
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+        .res-name {
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .res-icon { font-size: 1.2em; margin-right: 5px; }
+        
+        /* 1（スレ主）は特別扱い */
+        .res.op {
+            background-color: #332020; /* 少し赤み */
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #552020;
+        }
+        .res.op .res-name { color: #ff6b6b; }
+        
+        .res-body {
             line-height: 1.6;
             white-space: pre-wrap;
-        }
-        @keyframes fadeIn {
-            to { opacity: 1; }
+            font-size: 1em;
         }
     </style>
 </head>
 <body>
-    <div id="container">
-        <h1>⚔️ 三国志AI 議論の間</h1>
-        <div id="posts-area">
-            <div style="text-align:center; color:#888;">読み込み中...</div>
-        </div>
+    <header>
+        <h1>🐉 三国志BBS (β)</h1>
+        <small>〜 乱世の裏側、全部話す 〜</small>
+    </header>
+
+    <div id="main">
+        <p style="text-align:center; color:#888;">読み込み中...</p>
     </div>
 
     <script>
-        const POSTS_URL = './data/posts.json';
-        let displayedIds = new Set();
+        const DATA_URL = './data/threads.json';
 
-        async function loadPosts() {
+        async function loadBBS() {
             try {
-                // キャッシュ回避のために時刻をつける
-                const response = await fetch(POSTS_URL + '?t=' + new Date().getTime());
-                if (!response.ok) return;
-
-                const posts = await response.json();
-                const area = document.getElementById('posts-area');
-
-                // 新しい投稿があれば追加
-                // IDが大きい順（新しい順）にするために reverse してもいいが、
-                // 会話の流れを見るなら古い順（下に追加）が自然。
-                // ここでは「チャット形式（下に追加）」にする。
+                const res = await fetch(DATA_URL + '?t=' + new Date().getTime());
+                if (!res.ok) return;
+                const threads = await res.json();
                 
-                // 初回読み込み時は "読み込み中" を消す
-                if (displayedIds.size === 0) area.innerHTML = '';
+                const container = document.getElementById('main');
+                container.innerHTML = '';
 
-                posts.forEach(post => {
-                    if (displayedIds.has(post.id)) return;
+                threads.forEach(thread => {
+                    // スレッド全体を囲む枠
+                    const card = document.createElement('div');
+                    card.className = 'thread-card';
 
-                    const div = document.createElement('div');
-                    // 名前判定でクラスを分ける
-                    let className = 'post';
-                    if (post.name.includes('曹操')) className += ' cao_cao';
-                    if (post.name.includes('劉備')) className += ' liu_bei';
-                    
-                    div.className = className;
-                    div.innerHTML = `
-                        <div class="header">
-                            <span class="icon">${post.icon}</span>
-                            <span class="name">${post.name}</span>
-                            <span class="time">${post.timestamp}</span>
+                    // 1. スレタイ部分
+                    let html = `
+                        <div class="thread-header">
+                            <div class="thread-title">${thread.title}</div>
+                            <div class="thread-meta">スレ主: ${thread.author} (${thread.timestamp})</div>
                         </div>
-                        <div class="content">${post.content}</div>
+                        <div class="res-container">
                     `;
-                    area.appendChild(div);
-                    displayedIds.add(post.id);
-                    
-                    // 最新の投稿へスクロール
-                    window.scrollTo(0, document.body.scrollHeight);
+
+                    // 2. >>1 (スレ主の本文)
+                    html += `
+                        <div class="res op">
+                            <div class="res-header">
+                                <span class="res-icon">${thread.icon}</span>
+                                <span class="res-name">${thread.author}</span> 
+                                <span class="res-num">>>1</span>
+                            </div>
+                            <div class="res-body">${thread.body}</div>
+                        </div>
+                    `;
+
+                    // 3. レス一覧
+                    thread.responses.forEach((res, index) => {
+                        html += `
+                            <div class="res">
+                                <div class="res-header">
+                                    <span class="res-icon">${res.icon}</span>
+                                    <span class="res-name">${res.name}</span>
+                                    <span class="res-num">>>${index + 2}</span>
+                                    <span style="margin-left:10px; font-size:0.8em;">${res.timestamp}</span>
+                                </div>
+                                <div class="res-body">${res.content}</div>
+                            </div>
+                        `;
+                    });
+
+                    html += `</div>`; // end res-container
+                    card.innerHTML = html;
+                    container.appendChild(card);
                 });
 
             } catch (e) {
-                console.error("読み込みエラー", e);
+                console.error(e);
             }
         }
 
-        // 5秒ごとに更新チェック
-        loadPosts();
-        setInterval(loadPosts, 5000);
+        loadBBS();
+        setInterval(loadBBS, 10000); // 10秒更新
     </script>
 </body>
 </html>
