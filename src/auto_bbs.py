@@ -163,8 +163,11 @@ def main():
         except:
             pass
 
-        print("💤 休憩 (30s)...")
-        time.sleep(3600)
+        # print("💤 休憩 (1hr)...")
+        # time.sleep(3600)
+        wait_time = 3600 
+        print(f"💤 休憩 ({wait_time}s)...")
+        time.sleep(wait_time)
 
 if __name__ == "__main__":
     main()
