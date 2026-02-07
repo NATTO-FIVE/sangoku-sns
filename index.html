@@ -13,20 +13,17 @@
             padding: 0;
         }
         header {
-            background-color: #b22222; /* 魏の赤 */
+            background-color: #b22222;
             padding: 15px;
             text-align: center;
             border-bottom: 4px solid #ffd700;
         }
         h1 { margin: 0; font-size: 1.5em; color: #fff; }
-        
         #main {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
-
-        /* スレッドカードのデザイン */
         .thread-card {
             background-color: #2d2d2d;
             border: 1px solid #444;
@@ -43,15 +40,13 @@
         .thread-title {
             font-size: 1.2em;
             font-weight: bold;
-            color: #87ceeb; /* スレタイ色 */
+            color: #87ceeb;
             margin-bottom: 5px;
         }
         .thread-meta {
             font-size: 0.8em;
             color: #888;
         }
-
-        /* レスのデザイン */
         .res-container {
             padding: 15px;
         }
@@ -61,7 +56,6 @@
             padding-bottom: 15px;
         }
         .res:last-child { border-bottom: none; }
-        
         .res-header {
             margin-bottom: 5px;
             font-size: 0.9em;
@@ -72,16 +66,13 @@
             color: #ffd700;
         }
         .res-icon { font-size: 1.2em; margin-right: 5px; }
-        
-        /* 1（スレ主）は特別扱い */
         .res.op {
-            background-color: #332020; /* 少し赤み */
+            background-color: #332020;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #552020;
         }
         .res.op .res-name { color: #ff6b6b; }
-        
         .res-body {
             line-height: 1.6;
             white-space: pre-wrap;
@@ -96,7 +87,7 @@
     </header>
 
     <div id="main">
-        <p style="text-align:center; color:#888;">読み込み中...</p>
+        <p style="text-align:center; color:#888;">スレッド読み込み中...</p>
     </div>
 
     <script>
@@ -111,12 +102,11 @@
                 const container = document.getElementById('main');
                 container.innerHTML = '';
 
+                // 新しいスレッド順に表示
                 threads.forEach(thread => {
-                    // スレッド全体を囲む枠
                     const card = document.createElement('div');
                     card.className = 'thread-card';
 
-                    // 1. スレタイ部分
                     let html = `
                         <div class="thread-header">
                             <div class="thread-title">${thread.title}</div>
@@ -125,7 +115,7 @@
                         <div class="res-container">
                     `;
 
-                    // 2. >>1 (スレ主の本文)
+                    // >>1 (スレ主)
                     html += `
                         <div class="res op">
                             <div class="res-header">
@@ -137,33 +127,34 @@
                         </div>
                     `;
 
-                    // 3. レス一覧
-                    thread.responses.forEach((res, index) => {
-                        html += `
-                            <div class="res">
-                                <div class="res-header">
-                                    <span class="res-icon">${res.icon}</span>
-                                    <span class="res-name">${res.name}</span>
-                                    <span class="res-num">>>${index + 2}</span>
-                                    <span style="margin-left:10px; font-size:0.8em;">${res.timestamp}</span>
+                    // レス一覧
+                    if (thread.responses) {
+                        thread.responses.forEach((res, index) => {
+                            html += `
+                                <div class="res">
+                                    <div class="res-header">
+                                        <span class="res-icon">${res.icon}</span>
+                                        <span class="res-name">${res.name}</span>
+                                        <span class="res-num">>>${index + 2}</span>
+                                        <span style="margin-left:10px; font-size:0.8em;">${res.timestamp}</span>
+                                    </div>
+                                    <div class="res-body">${res.content}</div>
                                 </div>
-                                <div class="res-body">${res.content}</div>
-                            </div>
-                        `;
-                    });
+                            `;
+                        });
+                    }
 
-                    html += `</div>`; // end res-container
+                    html += `</div>`;
                     card.innerHTML = html;
                     container.appendChild(card);
                 });
-
             } catch (e) {
-                console.error(e);
+                console.error("読み込みエラー:", e);
             }
         }
 
         loadBBS();
-        setInterval(loadBBS, 10000); // 10秒更新
+        setInterval(loadBBS, 10000);
     </script>
 </body>
 </html>
