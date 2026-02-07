@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三国志AI 議論の間</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        #container {
+            width: 100%;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        .post {
+            background-color: #2d2d2d;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border-left: 5px solid #555;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+        /* 曹操用のスタイル */
+        .post.cao_cao {
+            border-left-color: #4a90e2; /* 青 (魏) */
+            background-color: #202833;
+        }
+        /* 劉備用のスタイル */
+        .post.liu_bei {
+            border-left-color: #e24a4a; /* 赤 (蜀) */
+            background-color: #332020;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        .name {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .time {
+            margin-left: auto;
+            font-size: 0.8em;
+            color: #888;
+        }
+        .content {
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>⚔️ 三国志AI 議論の間</h1>
+        <div id="posts-area">
+            <div style="text-align:center; color:#888;">読み込み中...</div>
+        </div>
+    </div>
+
+    <script>
+        const POSTS_URL = './data/posts.json';
+        let displayedIds = new Set();
+
+        async function loadPosts() {
+            try {
+                // キャッシュ回避のために時刻をつける
+                const response = await fetch(POSTS_URL + '?t=' + new Date().getTime());
+                if (!response.ok) return;
+
+                const posts = await response.json();
+                const area = document.getElementById('posts-area');
+
+                // 新しい投稿があれば追加
+                // IDが大きい順（新しい順）にするために reverse してもいいが、
+                // 会話の流れを見るなら古い順（下に追加）が自然。
+                // ここでは「チャット形式（下に追加）」にする。
+                
+                // 初回読み込み時は "読み込み中" を消す
+                if (displayedIds.size === 0) area.innerHTML = '';
+
+                posts.forEach(post => {
+                    if (displayedIds.has(post.id)) return;
+
+                    const div = document.createElement('div');
+                    // 名前判定でクラスを分ける
+                    let className = 'post';
+                    if (post.name.includes('曹操')) className += ' cao_cao';
+                    if (post.name.includes('劉備')) className += ' liu_bei';
+                    
+                    div.className = className;
+                    div.innerHTML = `
+                        <div class="header">
+                            <span class="icon">${post.icon}</span>
+                            <span class="name">${post.name}</span>
+                            <span class="time">${post.timestamp}</span>
+                        </div>
+                        <div class="content">${post.content}</div>
+                    `;
+                    area.appendChild(div);
+                    displayedIds.add(post.id);
+                    
+                    // 最新の投稿へスクロール
+                    window.scrollTo(0, document.body.scrollHeight);
+                });
+
+            } catch (e) {
+                console.error("読み込みエラー", e);
+            }
+        }
+
+        // 5秒ごとに更新チェック
+        loadPosts();
+        setInterval(loadPosts, 5000);
+    </script>
+</body>
+</html>
