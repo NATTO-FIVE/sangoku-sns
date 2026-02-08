@@ -1,0 +1,106 @@
+[
+  {
+    "timestamp": "22:55",
+    "title": "曹操の突飛な新規事業提案",
+    "description": "曹操は社内で突飛な新規事業の提案を行い、社内の士気を大きく揺さぶる。",
+    "proposer": "曹操",
+    "news_url": "",
+    "changes": {
+      "funds": -1500,
+      "morale": -100,
+      "risk": 200
+    }
+  },
+  {
+    "timestamp": "22:21",
+    "title": "曹操作戰資金爭奪戦",
+    "description": "曹操は新しく資金を欲しがり、荀彧と対立。郭嘉は曹操側に回り、新たな資金戦略を提案した。",
+    "proposer": "郭嘉",
+    "news_url": "",
+    "changes": {
+      "funds": -500,
+      "morale": -10,
+      "risk": 200
+    }
+  },
+  {
+    "timestamp": "22:20",
+    "title": "郭嘉提案新規事業",
+    "description": "郭嘉は新たなビジネス戦略を提案し、社内の他の武将たちに新しい事業に挑戦するように促す。これは曹操の支持を得ようとする一環である。",
+    "proposer": "郭嘉",
+    "news_url": "",
+    "changes": {
+      "funds": 2000,
+      "morale": 15,
+      "risk": 40
+    }
+  },
+  {
+    "timestamp": "22:18",
+    "title": "郭嘉の新規事業提案",
+    "description": "郭嘉は突然、社内で新規事業を提案し、メンバーたちを驚かせる。曹操の支持は高まると同時に、他のメンバー間で対立が生じる。",
+    "proposer": "郭嘉",
+    "news_url": "",
+    "changes": {
+      "funds": 2000,
+      "morale": 10,
+      "risk": 25
+    }
+  },
+  {
+    "timestamp": "22:16",
+    "title": "内紛対策本部設置",
+    "description": "曹操の支持者が郭嘉と対立し、本部内に対抗派の対策本部を設置。士気低下と資金流失を防ぐため、内部対策を開始する。",
+    "proposer": "荀彧",
+    "news_url": "",
+    "changes": {
+      "funds": -500,
+      "morale": -10,
+      "risk": 10
+    }
+  },
+  {
+    "timestamp": "22:15",
+    "title": "驚異の成果実績！",
+    "description": "魏ホールディングスが独自の「嘘八百のヤラセ庻库」を活用し、業界トップレベルの成果を上げています。あなたのビジネスも、驚異的な成果を実現させましょう！",
+    "proposer": "天の声",
+    "news_url": "",
+    "changes": {
+      "funds": -500,
+      "morale": 30,
+      "risk": 30
+    }
+  },
+  {
+    "timestamp": "22:13",
+    "title": "郭嘉提案新規事業",
+    "description": "郭嘉は曹操の元に新規事業の提案をし、そのアイデアに興奮した曹操は即日資金を提供。しかし、荀彧はその事業が曹操の独り勝利を招くと懸念し、郭嘉の提案を否定した。",
+    "proposer": "郭嘉",
+    "news_url": "",
+    "changes": {
+      "funds": 2000,
+      "morale": 10,
+      "risk": 20
+    }
+  },
+  {
+    "timestamp": "22:11",
+    "title": "郭嘉の新規事業提案",
+    "description": "郭嘉は急いで新たなビジネスチャンスを提案し、資金を増やす計画を示唆。しかし、曹操の反対に遭う。",
+    "proposer": "郭嘉",
+    "news_url": "",
+    "changes": {
+      "funds": 1500,
+      "morale": 5,
+      "risk": 15
+    }
+  },
+  {
+    "timestamp": "22:10",
+    "title": "魏ホールディングス創業",
+    "description": "システム稼働。",
+    "proposer": "システム",
+    "news_url": "",
+    "changes": {}
+  }
+]
