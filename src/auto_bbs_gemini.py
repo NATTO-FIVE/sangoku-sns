@@ -13,16 +13,13 @@ API_KEY = "AIzaSyDkx-Mbz3tOYisOX9L3cFOCaM87koHftxo"
 genai.configure(api_key=API_KEY)
 
 # --- 設定 ---
-# JSONモードが確実に効く gemini-1.5-flash または gemini-2.0-flash-exp 推奨
-# MODEL_NAME = "models/gemini-1.5-flash"
-# MODEL_NAME = "gemini-2.0-flash"
-
+# 安定の1.5 Flashを使用
 MODEL_NAME = "models/gemini-flash-latest"
 
 AGENTS_DIR = "./src/agents/"
 DATA_FILE = "./data/threads.json"
 
-# 1時間に1回 (3600秒)
+# スレッド更新間隔：1時間 (3600秒)
 SLEEP_TIME = 3600 
 
 AGENT_IDS = ["cao_cao", "liu_bei", "sun_quan", "zhou_yu", "zhuge_liang", "guo_jia", "sima_yi"]
@@ -40,16 +37,14 @@ AUTO_TOPICS = [
     "【質問】競合他社（蜀・呉）への転職活動がバレた場合の処遇について"
 ]
 
-print(f"--- ☁️ 三国ホールディングス 重厚長大モード (SafeFilter OFF / JSON Mode) ---")
+print(f"--- ☁️ 三国ホールディングス 不死鳥モード (Auto Retry / SafeFilter OFF) ---")
 
-# --- ⚙️ モデル設定 (重要) ---
-# 1. 強制JSONモード
+# --- ⚙️ モデル設定 ---
 generation_config = {
     "temperature": 1.0,
     "response_mime_type": "application/json",
 }
 
-# 2. 安全フィルターを全解除 (ブラック企業ロールプレイ用)
 safety_settings = {
     HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
     HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
@@ -62,6 +57,8 @@ model = genai.GenerativeModel(
     generation_config=generation_config,
     safety_settings=safety_settings
 )
+
+# --- 🛠️ ヘルパー関数 ---
 
 def load_json(path):
     if not os.path.exists(path): return []
@@ -76,66 +73,6 @@ def load_agent(agent_id):
     if not os.path.exists(path): return None
     with open(path, "r", encoding="utf-8") as f: return json.load(f)
 
-# --- 生成ロジック ---
-
-def create_thread(agent):
-    topic = random.choice(AUTO_TOPICS)
-    
-    # JSONモードなので、出力フォーマットの指示は不要
-    prompt = f"""
-あなたは「{agent['name']}」です。
-役割: {agent['system']}
-
-【指令】
-社内掲示板に新しいスレッドを立ててください。
-お題: {topic}
-
-今回は「深刻な相談」または「熱い議論の提案」です。
-400文字〜600文字程度の長文で、現状の課題、具体的な数字、過去の経緯、あなたの強い感情（怒り、諦め、野心など）を盛り込んでください。
-
-出力スキーマ:
-{{ "title": "str", "body": "str" }}
-"""
-    try:
-        response = model.generate_content(prompt)
-        # JSONモードなので直接辞書として読み込める
-        data = json.loads(response.text)
-        return data['title'], data['body']
-    except Exception as e:
-        print(f"⚠️ スレ立てエラー (詳細): {e}")
-        # エラー時のデバッグ用（もしresponseがあれば中身を見る）
-        try: print(f"Raw Response: {response.text}")
-        except: pass
-        return f"【話題】{topic}", "（システムエラー：投稿に失敗しました）"
-
-def create_response(agent, thread):
-    context = f"スレ主（{thread['author']}）: {thread['body'][:300]}...\n"
-    for res in thread['responses'][-3:]:
-        context += f"{res['name']}: {res['content'][:100]}...\n"
-
-    prompt = f"""
-あなたは「{agent['name']}」です。
-役割: {agent['system']}
-
-【文脈】
-{context}
-
-【指令】
-この議論に対して、あなたの立場から「長文レス（200文字〜400文字）」を返してください。
-論理的、または感情的に深く掘り下げてください。
-専門用語（KPI、ROI、コンプラ、技術的負債など）を多用してください。
-
-出力スキーマ:
-{{ "content": "str" }}
-"""
-    try:
-        response = model.generate_content(prompt)
-        data = json.loads(response.text)
-        return data['content']
-    except Exception as e:
-        print(f"⚠️ レス生成エラー: {e}")
-        return "......"
-
 def git_sync():
     try:
         subprocess.run(["git", "add", DATA_FILE], check=True)
@@ -144,6 +81,58 @@ def git_sync():
         print("✅ GitHub同期完了")
     except:
         pass
+
+# --- 🛡️ ゾンビ機能（リトライ処理） ---
+def generate_safe(prompt_func, max_retries=5):
+    """429エラーが出たら待機してリトライするラッパー関数"""
+    for attempt in range(max_retries):
+        try:
+            return prompt_func()
+        except Exception as e:
+            error_msg = str(e)
+            if "429" in error_msg:
+                wait_time = 60 * (attempt + 1) # 60秒, 120秒, 180秒...と待機時間を増やす
+                print(f"\n⏳ 速度制限(429)検知。{wait_time}秒 冷却します... (Re-try {attempt+1}/{max_retries})")
+                time.sleep(wait_time)
+            else:
+                print(f"⚠️ 生成エラー: {e}")
+                return None
+    return None
+
+# --- 生成ロジック ---
+
+def create_thread_content(agent, topic):
+    prompt = f"""
+あなたは「{agent['name']}」です。
+役割: {agent['system']}
+【指令】
+社内掲示板に新しいスレッドを立ててください。
+お題: {topic}
+今回は「深刻な相談」または「熱い議論の提案」です。
+400文字〜600文字程度の長文で、現状の課題、具体的な数字、過去の経緯、感情を盛り込んでください。
+出力スキーマ: {{ "title": "str", "body": "str" }}
+"""
+    response = model.generate_content(prompt)
+    return json.loads(response.text)
+
+def create_response_content(agent, thread):
+    context = f"スレ主（{thread['author']}）: {thread['body'][:300]}...\n"
+    for res in thread['responses'][-3:]:
+        context += f"{res['name']}: {res['content'][:100]}...\n"
+
+    prompt = f"""
+あなたは「{agent['name']}」です。
+役割: {agent['system']}
+【文脈】
+{context}
+【指令】
+この議論に対して、あなたの立場から「長文レス（200文字〜400文字）」を返してください。
+論理的、または感情的に深く掘り下げてください。
+専門用語（KPI、ROI、コンプラ、技術的負債など）を多用してください。
+出力スキーマ: {{ "content": "str" }}
+"""
+    response = model.generate_content(prompt)
+    return json.loads(response.text)['content']
 
 # --- メインループ ---
 def main():
@@ -156,9 +145,19 @@ def main():
     while True:
         author_id = random.choice(AGENT_IDS)
         author = agents[author_id]
+        topic = random.choice(AUTO_TOPICS)
         
-        print(f"\n🆕 {author['name']} が長文スレを投稿中...")
-        title, body = create_thread(author)
+        print(f"\n🆕 {author['name']} が長文スレを投稿しようとしています...")
+        
+        # リトライ付きで実行
+        data = generate_safe(lambda: create_thread_content(author, topic))
+        
+        if not data:
+            print("❌ スレ立て失敗。スキップします。")
+            time.sleep(10)
+            continue
+
+        title, body = data['title'], data['body']
         
         threads = load_json(DATA_FILE)
         if not isinstance(threads, list): threads = []
@@ -178,7 +177,6 @@ def main():
         print(f"📌 {title}")
         print(f"📝 本文文字数: {len(body)}文字")
         
-        # レス数を増やす
         res_count = random.randint(8, 12)
         print(f"💬 {res_count}件の激論を開始します...")
         
@@ -191,8 +189,12 @@ def main():
             if new_thread['responses'] and new_thread['responses'][-1]['name'] == responder['name']:
                 continue
 
-            res_content = create_response(responder, new_thread)
+            # リトライ付きで実行
+            res_content = generate_safe(lambda: create_response_content(responder, new_thread))
             
+            if not res_content:
+                res_content = "......"
+
             new_res = {
                 "name": responder['name'],
                 "icon": responder.get("icon", ""),
@@ -202,7 +204,9 @@ def main():
             new_thread['responses'].append(new_res)
             
             print(f"   {responder['name']}: {res_content[:30]}...")
-            time.sleep(5) # ゆっくり
+            
+            # 20秒待つ（これでRPM制限を確実に回避）
+            time.sleep(20)
 
         save_json(DATA_FILE, threads)
         git_sync()
