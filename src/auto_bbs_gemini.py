@@ -6,24 +6,27 @@ import os
 import random
 import re
 import google.generativeai as genai
+from google.generativeai.types import HarmCategory, HarmBlockThreshold
 
 # --- 🔑 APIキー設定 ---
 API_KEY = "AIzaSyDkx-Mbz3tOYisOX9L3cFOCaM87koHftxo"
 genai.configure(api_key=API_KEY)
 
 # --- 設定 ---
-# MODEL_NAME = "models/gemini-2.0-flash"  # そのまま
+# JSONモードが確実に効く gemini-1.5-flash または gemini-2.0-flash-exp 推奨
+# MODEL_NAME = "models/gemini-1.5-flash"
+# MODEL_NAME = "gemini-2.0-flash"
+
 MODEL_NAME = "models/gemini-flash-latest"
 
 AGENTS_DIR = "./src/agents/"
 DATA_FILE = "./data/threads.json"
 
-# ⏱️ ここを変更：1時間（3600秒）に1回
+# 1時間に1回 (3600秒)
 SLEEP_TIME = 3600 
 
 AGENT_IDS = ["cao_cao", "liu_bei", "sun_quan", "zhou_yu", "zhuge_liang", "guo_jia", "sima_yi"]
 
-# お題も少し「議論向き」に重くする
 AUTO_TOPICS = [
     "【議論】弊社における「働き方改革」が完全に形骸化している件について",
     "【技術】レガシーシステム（魏システム）の完全撤廃とクラウド移行の是非",
@@ -37,9 +40,28 @@ AUTO_TOPICS = [
     "【質問】競合他社（蜀・呉）への転職活動がバレた場合の処遇について"
 ]
 
-print(f"--- ☁️ 三国ホールディングス 重厚長大モード ({MODEL_NAME}) ---")
+print(f"--- ☁️ 三国ホールディングス 重厚長大モード (SafeFilter OFF / JSON Mode) ---")
 
-model = genai.GenerativeModel(MODEL_NAME)
+# --- ⚙️ モデル設定 (重要) ---
+# 1. 強制JSONモード
+generation_config = {
+    "temperature": 1.0,
+    "response_mime_type": "application/json",
+}
+
+# 2. 安全フィルターを全解除 (ブラック企業ロールプレイ用)
+safety_settings = {
+    HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+    HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+    HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+    HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+}
+
+model = genai.GenerativeModel(
+    model_name=MODEL_NAME,
+    generation_config=generation_config,
+    safety_settings=safety_settings
+)
 
 def load_json(path):
     if not os.path.exists(path): return []
@@ -54,77 +76,65 @@ def load_agent(agent_id):
     if not os.path.exists(path): return None
     with open(path, "r", encoding="utf-8") as f: return json.load(f)
 
-def clean_text(text):
-    text = re.sub(r'【.*?】', '', text)
-    text = re.sub(r'スレタイ[:：].*', '', text)
-    text = re.sub(r'```json', '', text)
-    text = re.sub(r'```', '', text)
-    if "：" in text: text = text.split("：")[-1]
-    return text.strip()
-
-# --- 生成ロジック (長文特化) ---
+# --- 生成ロジック ---
 
 def create_thread(agent):
     topic = random.choice(AUTO_TOPICS)
     
+    # JSONモードなので、出力フォーマットの指示は不要
     prompt = f"""
-あなたは「{agent['name']}」になりきってください。
-役割設定: {agent['system']}
+あなたは「{agent['name']}」です。
+役割: {agent['system']}
 
 【指令】
 社内掲示板に新しいスレッドを立ててください。
 お題: {topic}
 
 今回は「深刻な相談」または「熱い議論の提案」です。
-以下のJSON形式のみを出力してください。
+400文字〜600文字程度の長文で、現状の課題、具体的な数字、過去の経緯、あなたの強い感情（怒り、諦め、野心など）を盛り込んでください。
 
-{{
-  "title": "【議論】などのタイトル",
-  "body": "400文字〜600文字程度の長文を書いてください。現状の課題、具体的な数字、過去の経緯、あなたの強い感情（怒り、諦め、野心など）を盛り込んで、読み応えのある内容にしてください。"
-}}
+出力スキーマ:
+{{ "title": "str", "body": "str" }}
 """
     try:
         response = model.generate_content(prompt)
-        text = clean_text(response.text)
-        match = re.search(r'\{.*\}', text, re.DOTALL)
-        if match:
-            data = json.loads(match.group())
-            return data['title'], data['body']
-        else:
-            return f"【話題】{topic}", "詳細を語る気力もない..."
+        # JSONモードなので直接辞書として読み込める
+        data = json.loads(response.text)
+        return data['title'], data['body']
     except Exception as e:
-        print(f"⚠️ APIエラー: {e}")
-        return f"【話題】{topic}", "..."
+        print(f"⚠️ スレ立てエラー (詳細): {e}")
+        # エラー時のデバッグ用（もしresponseがあれば中身を見る）
+        try: print(f"Raw Response: {response.text}")
+        except: pass
+        return f"【話題】{topic}", "（システムエラー：投稿に失敗しました）"
 
 def create_response(agent, thread):
-    # 文脈を全部渡す（長文議論には流れが重要）
-    context = f"スレ主（{thread['author']}）: {thread['body'][:200]}...\n"
-    for res in thread['responses'][-3:]: # 直近3件の流れを読む
+    context = f"スレ主（{thread['author']}）: {thread['body'][:300]}...\n"
+    for res in thread['responses'][-3:]:
         context += f"{res['name']}: {res['content'][:100]}...\n"
 
     prompt = f"""
-あなたは「{agent['name']}」になりきってください。
-役割設定: {agent['system']}
+あなたは「{agent['name']}」です。
+役割: {agent['system']}
 
 【文脈】
 {context}
 
 【指令】
 この議論に対して、あなたの立場から「長文レス（200文字〜400文字）」を返してください。
+論理的、または感情的に深く掘り下げてください。
+専門用語（KPI、ROI、コンプラ、技術的負債など）を多用してください。
 
-【ルール】
-1. 短い一言レスは禁止。論理的、または感情的に深く掘り下げてください。
-2. 専門用語（KPI、ROI、コンプラ、技術的負債など）を多用してください。
-3. 相手の意見に対して「それは違う」「甘い」「面白い」と明確なスタンスを取ってください。
-4. 箇条書きを使っても構いません。
-
-出力はレスの本文だけにしてください。
+出力スキーマ:
+{{ "content": "str" }}
 """
     try:
         response = model.generate_content(prompt)
-        return clean_text(response.text)
-    except:
-        return "..."
+        data = json.loads(response.text)
+        return data['content']
+    except Exception as e:
+        print(f"⚠️ レス生成エラー: {e}")
+        return "......"
 
 def git_sync():
     try:
@@ -166,8 +176,9 @@ def main():
         if len(threads) > 10: threads.pop()
         
         print(f"📌 {title}")
+        print(f"📝 本文文字数: {len(body)}文字")
         
-        # レス数を増やす（議論を白熱させる）
+        # レス数を増やす
         res_count = random.randint(8, 12)
         print(f"💬 {res_count}件の激論を開始します...")
         
@@ -190,11 +201,8 @@ def main():
             }
             new_thread['responses'].append(new_res)
             
-            # コンソールには長いので最初の1行だけ表示
             print(f"   {responder['name']}: {res_content[:30]}...")
-            
-            # API制限回避のため、少し長めに待つ（3秒）
-            time.sleep(3)
+            time.sleep(5) # ゆっくり
 
         save_json(DATA_FILE, threads)
         git_sync()
