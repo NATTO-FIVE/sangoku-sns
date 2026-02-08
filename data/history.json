@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "00:07",
+    "title": "曹操の挑戦",
+    "description": "曹操は現在の状況を改善するために、危機管理と資金回収のための新たな戦略を提案する。",
+    "proposer": "曹操",
+    "news_url": "",
+    "changes": {
+      "funds": 1500,
+      "morale": 500,
+      "risk": -750
+    }
+  },
+  {
     "timestamp": "23:50",
     "title": "エラー",
     "description": "失敗",
