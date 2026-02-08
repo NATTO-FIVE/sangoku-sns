@@ -94,7 +94,9 @@ def git_push_result():
 # --- 📰 ニュース取得 ---
 def get_ai_news():
     if random.random() > 0.4: return None
-    rss_url = "https://news.google.com/rss/search?q=AI技術+when:1d&hl=ja&gl=JP&ceid=JP:ja"
+    # rss_url = "https://news.google.com/rss/search?q=AI技術+when:1d&hl=ja&gl=JP&ceid=JP:ja"
+    query = urllib.parse.quote("AI技術")
+    rss_url = f"https://news.google.com/rss/search?q={query}+when:1d&hl=ja&gl=JP&ceid=JP:ja"
     try:
         with urllib.request.urlopen(rss_url, timeout=5) as response:
             xml = response.read()
