@@ -199,6 +199,12 @@ def simulation_loop():
     if not os.path.exists(HISTORY_FILE): 
         save_json_safe(HISTORY_FILE, [{"timestamp": datetime.datetime.now().strftime("%H:%M"), "title": "魏創業", "description": "システム稼働。", "proposer": "システム", "changes": {}}])
 
+    # ★ 追加：起動直後に一度強制的に送信して、404エラー（真っ白）を防ぐ
+    print("🚀 初回データを同期中...")
+    subprocess.run(["git", "add", "data/*.json"], check=False)
+    subprocess.run(["git", "commit", "-m", "🚀 System Started"], check=False)
+    subprocess.run(["git", "push", "origin", "main"], check=False)
+
     print("🚀 シミュレーション開始！")
     
     while True:
@@ -236,10 +242,13 @@ def simulation_loop():
             with open(DATA_FILE, "w", encoding="utf-8") as f: json.dump(current_state, f, indent=2, ensure_ascii=False)
             with open(HISTORY_FILE, "w", encoding="utf-8") as f: json.dump(current_history, f, indent=2, ensure_ascii=False)
 
-            # --- 💾 自動送信 (メインループ版) ---
-            git_push_result()
+            # --- 💾 自動送信 (判定を甘くして確実に送る) ---
+            print("📤 更新データを送信中...")
+            subprocess.run(["git", "add", "data/*.json"], check=False)
+            subprocess.run(["git", "commit", "-m", f"📊 Update {datetime.datetime.now().strftime('%H:%M')}"], check=False)
+            subprocess.run(["git", "push", "origin", "main"], check=False)
         
-        print(f"💤 {SLEEP_TIME}秒 待機...")
+        print(f"✅ 更新完了。次の更新まで {SLEEP_TIME // 60} 分待機します。")
         time.sleep(SLEEP_TIME)
 
 # --- 🌍 Webサーバー ---
