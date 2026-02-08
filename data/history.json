@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "00:14",
+    "title": "魏軍製品品質向上プロジェクト",
+    "description": "曹操は荀彧の提案で、魏軍の製品品質向上と生産性の向上に取り組むことを決定した。荀彧はAI技術を活用し、軍事製品の品質と生産性を向上させるプロジェクトを提案した。",
+    "proposer": "荀彧",
+    "news_url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5qWGRiUENnYU9fOUcyOWE2Rk55RG02Y05qYVRrVml6QXV0SFFuT0lrN0wzUWhSNXNqZzNDa181RHplSHdBZ0dJdW5Ka2xZNjZkOV96SC1ORC1yVWZWaEh0U0hQMl9xeGRhbklXMQ?oc=5",
+    "changes": {
+      "funds": 2000,
+      "morale": 500,
+      "risk": -100
+    }
+  },
+  {
     "timestamp": "00:12",
     "title": "士気とリスク上昇の新たなエンパワーメンツ: 田村淳のNewsCLUB",
     "description": "魏は、士気とリスクを向上させる新たな施策として、2月7日、14日、21日土曜日に放送される「田村淳のNewsCLUB」を開始することを提案します。この番組は、田村淳の声を忠実に再現するAIによって放送され、魏の戦略や政治家達の言動に興味を持つ人々に向けたニュース番組です。",
