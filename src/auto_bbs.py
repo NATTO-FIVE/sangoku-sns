@@ -204,7 +204,7 @@ def main():
             pass
 
         # 休憩時間（テスト用に短くしても良いが、運用は長く）
-        wait_time = 3600 
+        wait_time = 30 #3600 
         print(f"💤 休憩 ({wait_time}s)...")
         time.sleep(wait_time)
 
