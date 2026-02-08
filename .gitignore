@@ -9,7 +9,6 @@ models/
 ref_pro/
 trash/
 # ローカルの動的データ
-data/*.json
 *.tmp
 trigger_*.txt
 

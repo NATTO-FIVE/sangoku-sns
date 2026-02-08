@@ -208,11 +208,28 @@ def simulation_loop():
     print("🚀 シミュレーション開始！")
     
     while True:
+        # 0. GitHubから最新の変更（スマホからの介入）を取り込む
+        print("\n🔄 GitHubから最新状況を確認中...")
+        subprocess.run(["git", "pull", "origin", "main"], check=False)
+
         # A. 現状読み込み
         state_snapshot = load_json_safe(DATA_FILE, INITIAL_STATE)
         
+        # ★ トリガーファイルの読み込み（例: data/trigger.json）
+        trigger_data = load_json_safe("data/trigger.json", {"action": None})
+
         # B. 各種生成
-        event_data = generate_event(state_snapshot)
+        if trigger_data.get("action"):
+            # ボタンが押されていた場合：介入イベントを生成
+            action = trigger_data["action"]
+            print(f"⚡ 介入検知 ({action}): 専用イベントを生成します")
+            event_data = generate_intervention(action, state_snapshot)
+            # 処理が終わったのでトリガーをクリア（重要！）
+            save_json_safe("data/trigger.json", {"action": None})
+        else:
+            # 通常時：1時間おきの定例イベントを生成
+            event_data = generate_event(state_snapshot)
+
         comments = update_ministers_comments(state_snapshot, event_data)
         sns_log = generate_sns_reactions(event_data, state_snapshot.get('sns', []), comments)
 
