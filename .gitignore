@@ -1,3 +1,18 @@
-models/
-__pycache__/
+# 環境ファイル
 .venv/
+
+# AIモデル
+models/
+*.gguf
+
+#避難した過去プログラム
+ref_pro/
+trash/
+# ローカルの動的データ
+data/*.json
+*.tmp
+trigger_*.txt
+
+# pythonのキャッシュなど
+__pycache__/
+.DS_Store

@@ -1,0 +1,35 @@
+name: Wei Holdings Hourly Update
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 毎時0分に実行
+  workflow_dispatch:      # 手動実行ボタンも追加
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install llama-cpp-python feedparser
+
+      - name: Run Simulation
+        run: |
+          # 1回だけ実行して終了するスクリプトを叩く
+          python src/local_simulation_05.py --once 
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/*.json
+          git commit -m "📊 魏ホールディングス 定期更新" || exit 0
+          git push

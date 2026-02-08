@@ -3,158 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>三国志BBS - 乱世の匿名掲示板</title>
+    <title>魏ホールディングス 統合本部</title>
     <style>
-        body {
-            background-color: #1e1e1e;
-            color: #dcdcdc;
-            font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
-            margin: 0;
-            padding: 0;
+        /* レイアウト設定 */
+        body { 
+            font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; 
+            background-color: #0f0f0f; color: #ecf0f1; 
+            margin: 0; padding: 0;
+            height: 100vh; overflow: hidden; display: flex;
         }
-        header {
-            background-color: #b22222;
-            padding: 15px;
-            text-align: center;
-            border-bottom: 4px solid #ffd700;
+        .col-left { width: 300px; background: #191919; border-right: 4px solid #c0392b; display: flex; flex-direction: column; flex-shrink: 0; }
+        .col-center { flex: 1; background: #1e272e; display: flex; flex-direction: column; padding: 20px; min-width: 400px; }
+        .col-right { width: 350px; background: #000; border-left: 4px solid #3498db; display: flex; flex-direction: column; flex-shrink: 0; }
+
+        .scroll-area { flex: 1; overflow-y: auto; padding: 15px; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+
+        /* 左カラム */
+        h2 { margin: 0; padding: 15px; font-size: 16px; color: #bdc3c7; border-bottom: 1px solid #333; background: rgba(0,0,0,0.2); }
+        .minister-card {
+            background: #2d3436; padding: 10px; border-radius: 5px; margin-bottom: 10px;
+            display: flex; gap: 10px; align-items: flex-start; border: 1px solid #444; transition: 0.2s;
         }
-        h1 { margin: 0; font-size: 1.5em; color: #fff; }
-        #main {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+        .minister-card:hover { border-color: #e74c3c; background: #353b48; }
+        .avatar { width: 45px; height: 45px; border-radius: 50%; background-color: #555; background-size: cover; flex-shrink: 0; border: 2px solid #777; }
+        .minister-info { width: 100%; }
+        .minister-name { font-weight: bold; font-size: 14px; margin-bottom: 4px; display: block;}
+        .minister-role { font-size: 10px; color: #bdc3c7; background: #000; padding: 2px 5px; border-radius: 3px; margin-left: 5px;}
+        .minister-comment { font-size: 12px; color: #ddd; background: #000; padding: 8px; border-radius: 4px; line-height: 1.4; position: relative; }
+        .minister-comment::after { content: ""; position: absolute; left: -6px; top: 12px; border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent #000 transparent transparent; }
+
+        /* 中央カラム */
+        h1 { margin: 0 0 15px 0; font-size: 24px; color: #e74c3c; border-bottom: 2px solid #c0392b; text-align: center; padding-bottom: 10px;}
+        .rating-panel {
+            background: #2f3640; padding: 10px 20px; border-radius: 8px; margin-bottom: 15px;
+            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .thread-card {
-            background-color: #2d2d2d;
-            border: 1px solid #444;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        .rating-box { text-align: center; }
+        .rating-val { font-size: 28px; font-weight: bold; color: #f1c40f; text-shadow: 0 0 10px rgba(241, 196, 15, 0.5); }
+        .rating-label { font-size: 11px; color: #95a5a6; }
+        .reputation-val { font-size: 20px; font-weight: bold; color: #fff; }
+
+        .status-bar {
+            display: flex; justify-content: space-around; background: #2f3640; 
+            padding: 10px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #444;
         }
-        .thread-header {
-            background-color: #383838;
-            padding: 15px;
-            border-bottom: 1px solid #555;
+        .stat-val { font-size: 22px; font-weight: bold; color: #fff; }
+        .stat-label { font-size: 11px; color: #95a5a6; margin-bottom: 2px; }
+
+        .action-panel { display: flex; gap: 10px; margin-bottom: 15px; }
+        .btn {
+            flex: 1; border: none; padding: 12px; border-radius: 5px;
+            font-weight: bold; cursor: pointer; color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,0.5);
+            transition: 0.1s; display: flex; flex-direction: column; align-items: center;
         }
-        .thread-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #87ceeb;
-            margin-bottom: 5px;
-        }
-        .thread-meta {
-            font-size: 0.8em;
-            color: #888;
-        }
-        .res-container {
-            padding: 15px;
-        }
-        .res {
-            margin-bottom: 15px;
-            border-bottom: 1px dashed #444;
-            padding-bottom: 15px;
-        }
-        .res:last-child { border-bottom: none; }
-        .res-header {
-            margin-bottom: 5px;
-            font-size: 0.9em;
-            color: #aaa;
-        }
-        .res-name {
-            font-weight: bold;
-            color: #ffd700;
-        }
-        .res-icon { font-size: 1.2em; margin-right: 5px; }
-        .res.op {
-            background-color: #332020;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #552020;
-        }
-        .res.op .res-name { color: #ff6b6b; }
-        .res-body {
-            line-height: 1.6;
-            white-space: pre-wrap;
-            font-size: 1em;
-        }
+        .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        .btn:active { transform: translateY(0); }
+        .btn:disabled { filter: grayscale(100%); cursor: not-allowed; transform: none; }
+        .btn-edict { background: linear-gradient(#f1c40f, #d35400); }
+        .btn-audit { background: linear-gradient(#3498db, #2980b9); }
+        .btn-rumor { background: linear-gradient(#e74c3c, #c0392b); }
+
+        .log-item { background: #2f3640; margin-bottom: 15px; padding: 15px; border-radius: 5px; border-left: 5px solid #e67e22; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .log-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .log-title { font-weight: bold; color: #e67e22; font-size: 16px;}
+        .log-time { font-size: 11px; color: #95a5a6; }
+        .log-desc { font-size: 14px; line-height: 1.6; color: #ddd; margin-bottom: 8px; }
+        .log-link { display: inline-block; font-size: 11px; color: #3498db; text-decoration: none; border: 1px solid #3498db; padding: 2px 8px; border-radius: 10px; margin-top: 5px; }
+
+        .btn-reset { background: transparent; border: 1px solid #555; color: #777; padding: 5px; width: 100%; margin-top: 10px; cursor: pointer; font-size: 10px; }
+        .btn-reset:hover { border-color: #e74c3c; color: #e74c3c; }
+
+        /* 右カラム */
+        .tweet { background: #111; padding: 12px; border-bottom: 1px solid #222; display: flex; gap: 10px; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .tweet-icon { width: 36px; height: 36px; border-radius: 50%; background: #555; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+        .tweet-content { flex: 1; }
+        .tweet-header { display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center;}
+        .tweet-name { font-weight: bold; font-size: 13px; color: #ecf0f1; }
+        .tweet-time { font-size: 10px; color: #555; }
+        .tweet-text { font-size: 12px; color: #ccc; line-height: 1.4; }
+        .tweet-vip .tweet-name { color: #f1c40f; }
+        .tweet-vip .tweet-icon { background: linear-gradient(135deg, #8e44ad, #c0392b); border: 2px solid #f1c40f; }
+
+        .change-plus { color: #2ecc71; } .change-minus { color: #e74c3c; }
+
+        /* 画像定義 */
+        .avatar-曹操 { background-image: url('images/caocao.png'); background-color: #c0392b; }
+        .avatar-荀彧 { background-image: url('images/juniku.png'); background-color: #16a085; }
+        .avatar-郭嘉 { background-image: url('images/kakuka.png'); background-color: #3498db; }
+        .avatar-司馬懿 { background-image: url('images/shibai.png'); background-color: #8e44ad; }
+        .avatar-荀攸 { background-image: url('images/junyu.png'); background-color: #7f8c8d; }
+        .avatar-賈詡 { background-image: url('images/kaku.png'); background-color: #2c3e50; }
+        .avatar-紫鸞 { background-image: url('images/ziran.png'); background-color: #8e44ad; border-color: #f1c40f; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>🐉 三国志BBS (β)</h1>
-        <small>〜 乱世の裏側、全部話す 〜</small>
-    </header>
 
-    <div id="main">
-        <p style="text-align:center; color:#888;">スレッド読み込み中...</p>
+    <div class="col-left">
+        <h2 style="color:#e74c3c; border-left:5px solid #e74c3c;">経営会議室</h2>
+        <div id="members-container" class="scroll-area"></div>
     </div>
 
-    <script>
-        const DATA_URL = './data/threads.json';
+    <div class="col-center">
+        <h1>魏ホールディングス 統合本部</h1>
+        <div class="rating-panel">
+            <div class="rating-box"><div class="rating-label">経営評価</div><div id="rating" class="rating-val">---</div></div>
+            <div class="rating-box"><div class="rating-label">市井の評判</div><div id="reputation" class="reputation-val">---</div></div>
+        </div>
 
-        async function loadBBS() {
-            try {
-                const res = await fetch(DATA_URL + '?t=' + new Date().getTime());
-                if (!res.ok) return;
-                const threads = await res.json();
-                
-                const container = document.getElementById('main');
-                container.innerHTML = '';
+        <div class="status-bar">
+            <div class="stat-item"><div class="stat-label">軍資金</div><div id="funds" class="stat-val">---</div></div>
+            <div class="stat-item"><div class="stat-label">士気</div><div id="morale" class="stat-val">---</div></div>
+            <div class="stat-item"><div class="stat-label">リスク</div><div id="risk" class="stat-val">---</div></div>
+        </div>
 
-                // 新しいスレッド順に表示
-                threads.forEach(thread => {
-                    const card = document.createElement('div');
-                    card.className = 'thread-card';
+        <div class="action-panel">
+            <button id="btn-edict" class="btn btn-edict" onclick="sendAction('edict')">📜 勅命</button>
+            <button id="btn-audit" class="btn btn-audit" onclick="sendAction('audit')">⚖️ 監査</button>
+            <button id="btn-rumor" class="btn btn-rumor" onclick="sendAction('rumor')">🔥 流言</button>
+        </div>
+        <div id="loading-msg" style="text-align:center; font-size:12px; color:#aaa; display:none; margin-bottom:10px;">⚡ 天の声を受信中...</div>
 
-                    let html = `
-                        <div class="thread-header">
-                            <div class="thread-title">${thread.title}</div>
-                            <div class="thread-meta">スレ主: ${thread.author} (${thread.timestamp})</div>
-                        </div>
-                        <div class="res-container">
-                    `;
+        <div id="log-list" class="scroll-area"></div>
+        <button class="btn-reset" onclick="resetWorld()">♻️ 世界線をリセットする</button>
+    </div>
 
-                    // >>1 (スレ主)
-                    html += `
-                        <div class="res op">
-                            <div class="res-header">
-                                <span class="res-icon">${thread.icon}</span>
-                                <span class="res-name">${thread.author}</span> 
-                                <span class="res-num">>>1</span>
-                            </div>
-                            <div class="res-body">${thread.body}</div>
-                        </div>
-                    `;
+    <div class="col-right">
+        <h2 style="color:#3498db; border-left:5px solid #3498db;">Wei-tter (Live)</h2>
+        <div id="sns-container" class="scroll-area"></div>
+    </div>
 
-                    // レス一覧
-                    if (thread.responses) {
-                        thread.responses.forEach((res, index) => {
-                            html += `
-                                <div class="res">
-                                    <div class="res-header">
-                                        <span class="res-icon">${res.icon}</span>
-                                        <span class="res-name">${res.name}</span>
-                                        <span class="res-num">>>${index + 2}</span>
-                                        <span style="margin-left:10px; font-size:0.8em;">${res.timestamp}</span>
-                                    </div>
-                                    <div class="res-body">${res.content}</div>
-                                </div>
-                            `;
-                        });
-                    }
+<script>
+    const MEMBERS = ["曹操", "荀彧", "郭嘉", "司馬懿", "荀攸", "賈詡", "紫鸞"];
+    const ROLES = {"曹操":"CEO","荀彧":"CFO","郭嘉":"CTO","司馬懿":"監査","荀攸":"CSO","賈詡":"CMO","紫鸞":"特命"};
 
-                    html += `</div>`;
-                    card.innerHTML = html;
-                    container.appendChild(card);
+    // ▼ チラつき防止用：前回のSNSデータを保存する変数
+    let lastSnsJson = "";
+
+    const memContainer = document.getElementById('members-container');
+    MEMBERS.forEach(name => {
+        const div = document.createElement('div');
+        div.className = 'minister-card';
+        div.innerHTML = `
+            <div class="avatar avatar-${name}"></div>
+            <div class="minister-info">
+                <div class="minister-name">${name} <span class="minister-role">${ROLES[name]}</span></div>
+                <div id="comment-${name}" class="minister-comment">...</div>
+            </div>`;
+        memContainer.appendChild(div);
+    });
+
+    function formatChange(val, type) {
+        if(!val) return "";
+        let cls = (type === 'risk') ? (val > 0 ? "change-minus" : "change-plus") : (val > 0 ? "change-plus" : "change-minus");
+        let sign = val > 0 ? "+" : "";
+        return `<span style="font-size:11px; font-weight:bold; margin-left:3px;" class="${cls}">(${sign}${val})</span>`;
+    }
+
+    function updateDashboard() {
+        const ts = new Date().getTime(); // キャッシュ回避
+        fetch('data/company_status.json?t=' + ts).then(r=>r.json()).then(data => {
+            // ステータス更新
+            document.getElementById('funds').innerText = data.funds.toLocaleString();
+            document.getElementById('morale').innerText = data.morale;
+            document.getElementById('risk').innerText = data.risk + '%';
+            document.getElementById('rating').innerText = data.rating || "---";
+            document.getElementById('reputation').innerText = data.reputation || "---";
+
+            // コメント更新
+            if(data.comments) {
+                MEMBERS.forEach(name => {
+                    const el = document.getElementById('comment-' + name);
+                    if(el && data.comments[name]) el.innerText = data.comments[name];
                 });
-            } catch (e) {
-                console.error("読み込みエラー:", e);
             }
-        }
 
-        loadBBS();
-        setInterval(loadBBS, 60000);
-    </script>
+            // SNS更新（ここを修正：差分チェック）
+            if(data.sns) {
+                const currentSnsJson = JSON.stringify(data.sns);
+                // 前回と中身が違う場合のみ書き換える
+                if (currentSnsJson !== lastSnsJson) {
+                    const snsContainer = document.getElementById('sns-container');
+                    snsContainer.innerHTML = ""; // 一度クリア
+                    
+                    data.sns.forEach(tweet => {
+                        const div = document.createElement('div');
+                        div.className = 'tweet' + (tweet.is_vip ? ' tweet-vip' : '');
+                        const iconChar = tweet.is_vip ? '★' : '👤';
+                        div.innerHTML = `
+                            <div class="tweet-icon">${iconChar}</div>
+                            <div class="tweet-content">
+                                <div class="tweet-header">
+                                    <span class="tweet-name">${tweet.name}</span>
+                                    <span class="tweet-time">${tweet.timestamp || ""}</span>
+                                </div>
+                                <div class="tweet-text">${tweet.content}</div>
+                            </div>`;
+                        snsContainer.appendChild(div);
+                    });
+                    // 最新状態を保存
+                    lastSnsJson = currentSnsJson;
+                }
+            }
+        });
+
+        fetch('data/history.json?t=' + ts).then(r=>r.json()).then(data => {
+            const list = document.getElementById('log-list');
+            list.innerHTML = "";
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'log-item';
+                let changes = "";
+                if(item.changes) {
+                    if(item.changes.funds) changes += `金${formatChange(item.changes.funds,'funds')} `;
+                    if(item.changes.morale) changes += `士${formatChange(item.changes.morale,'morale')} `;
+                    if(item.changes.risk) changes += `危${formatChange(item.changes.risk,'risk')} `;
+                }
+                
+                let linkHtml = "";
+                if(item.news_url) linkHtml = `<a href="${item.news_url}" target="_blank" class="log-link">🔗 関連ニュース</a>`;
+
+                div.innerHTML = `
+                    <div class="log-header"><span class="log-title">⚡ ${item.title}</span><span class="log-time">${item.timestamp}</span></div>
+                    <div class="log-desc">
+                        <span style="background:#444; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:5px;">${item.proposer}</span>
+                        ${item.description}
+                        <div>${linkHtml}</div>
+                    </div>
+                    <div style="font-size:12px; margin-top:5px; border-top:1px dashed #444; padding-top:5px;">${changes}</div>
+                `;
+                list.appendChild(div);
+            });
+        });
+    }
+
+    function sendAction(type) {
+        // ボタン連打防止
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(b => b.disabled = true);
+        document.getElementById('loading-msg').style.display = 'block';
+
+        fetch('/api/' + type, { method: 'POST' }).then(r=>{ 
+            if(r.ok){ 
+                updateDashboard(); 
+            }
+        }).finally(() => {
+            btns.forEach(b => b.disabled = false);
+            document.getElementById('loading-msg').style.display = 'none';
+        });
+    }
+
+    function resetWorld() { if(confirm("リセットしますか？")) fetch('/api/reset', { method: 'POST' }).then(r=>{ if(r.ok) updateDashboard(); }); }
+
+    updateDashboard();
+    // setInterval(updateDashboard, 5000); // 5秒間隔でチェック
+    setInterval(updateDashboard, 60000); // 60秒（1分）間隔に緩和
+</script>
 </body>
 </html>
