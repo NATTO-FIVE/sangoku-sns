@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "23:32",
+    "title": "曹操の突飛な新規事業提案",
+    "description": "曹操は、社内の既存の事業から脱却し、全く新しい事業を提案しました。これは既存のメンバーから反対の声も上がっています。",
+    "proposer": "曹操",
+    "news_url": "",
+    "changes": {
+      "funds": -2000,
+      "morale": -500,
+      "risk": 200
+    }
+  },
+  {
     "timestamp": "23:29",
     "title": "エラー",
     "description": "失敗",
