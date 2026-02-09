@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "21:22",
+    "title": "魏のAI技術開発プロジェクト開始",
+    "description": "紫鸞は、曹操が中心とする魏に対し、AI技術開発プロジェクトを提案。プロジェクトでは、曹操や荀彧、郭嘉、司馬懿など、魏の主要メンバーが協力し、AI技術を活用した新たな戦略や戦術を開発することを提案します。",
+    "proposer": "紫鸞",
+    "news_url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1NMXVmb29vdTVzQUJESVJZYnZ3aG1yTmc2d0VicmVSd01tMGVZcXJ6emF1S1ZCczlzck52bFkycG5rb29Gejk5MXNNZWsxUll2WlB0cGw0dUhIZnVwYTNWNlkxdDZFbEZfY1E?oc=5",
+    "changes": {
+      "funds": 15000,
+      "morale": 2000,
+      "risk": -500
+    }
+  },
+  {
     "timestamp": "21:21",
     "title": "郭嘉の大胆な新規事業提案",
     "description": "郭嘉は最近、曹操の軍資金を節約し、士気を上げるための大胆な新規事業を提案した。その事業の成功により、軍資金を増加させ、士気を上げ、リスクも軽減できる可能性がある。",
