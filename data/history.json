@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "03:59",
+    "title": "AIと知的財産の対策：国際的な対話の促進",
+    "description": "荀攸は、AIが知的財産の管理と保護にどのような影響を与え、魏が適切に対応すべきであると判断しました。彼は国際的な対話を促進することで、各国の知識と経験を共有し、新たな戦略を構築することを提案しました。",
+    "proposer": "荀攸",
+    "news_url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE1WU0Zra0prM2d1U1l6bUItcWxCNVBNdkc0cEJYQkU4enU4V0ZUUm5rZnZPRW4xY0JtbFl1dzNKd1V2a2FLVUo0eDdaTGo?oc=5",
+    "changes": {
+      "funds": -1000,
+      "morale": 1000,
+      "risk": -200
+    }
+  },
+  {
     "timestamp": "02:53",
     "title": "郭嘉の献策：新たな軍事同盟の提案",
     "description": "郭嘉は曹操の側近として、現在の難局に新たな解決策を提案します。その提案の一つが新たな軍事同盟の構築です。郭嘉は荀彧や司馬懿、荀攸など他のGMに提案書を送り、新たな同盟を形成することで、資金を増やし、士気を高め、リスクを減らすことを期待しています。",
@@ -345,18 +357,6 @@
       "funds": -1000,
       "morale": -100,
       "risk": 150
-    }
-  },
-  {
-    "timestamp": "21:34",
-    "title": "平穏な一日",
-    "description": "特になし。",
-    "proposer": "荀攸",
-    "news_url": "",
-    "changes": {
-      "funds": -10,
-      "morale": 0,
-      "risk": -5
     }
   }
 ]
