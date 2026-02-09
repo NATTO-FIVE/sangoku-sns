@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "22:13",
+    "title": "資金と士気向上プロジェクト",
+    "description": "資金と士気を向上させるためのプロジェクトを開始します。資金は輸入車の輸入と士気は最新AI技術とユニーク装備を提供することで向上させます。",
+    "proposer": "荀彧",
+    "news_url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE96d20wekVzaGtHcmp1YUF1TjFfWGlHTHkxNXdqaHFZenIwT0Nlblh3ZXB3MzBKbURWOFdJQ3BuZVJYYUNhaEpQbkpySjZkQzR6ZTVzanJ5d0loaTV1VTNlMlZhcy1iZ0hCUm40b1dDVQ?oc=5",
+    "changes": {
+      "funds": -50,
+      "morale": 100,
+      "risk": -5
+    }
+  },
+  {
     "timestamp": "22:12",
     "title": "【勅命】 不明な指令",
     "description": "皇帝が突然、全員が隠居先へ移動させられた。",
@@ -333,18 +345,6 @@
       "funds": 2000,
       "morale": 500,
       "risk": -100
-    }
-  },
-  {
-    "timestamp": "00:12",
-    "title": "士気とリスク上昇の新たなエンパワーメンツ: 田村淳のNewsCLUB",
-    "description": "魏は、士気とリスクを向上させる新たな施策として、2月7日、14日、21日土曜日に放送される「田村淳のNewsCLUB」を開始することを提案します。この番組は、田村淳の声を忠実に再現するAIによって放送され、魏の戦略や政治家達の言動に興味を持つ人々に向けたニュース番組です。",
-    "proposer": "荀攸",
-    "news_url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE1BYlNxTUNsUVhSdWlWLTJpVkxBWDg4U2dMVW1qbHphOVpDWFF3RDh4dXFHcFhodjlsZ0hjZXg5QVlNV3Z4aXZsTzFlYWl0dEdPZmFV?oc=5",
-    "changes": {
-      "funds": "増加",
-      "morale": "大幅上昇",
-      "risk": "軽減"
     }
   }
 ]
