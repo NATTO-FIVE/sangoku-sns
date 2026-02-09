@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "21:34",
+    "title": "平穏な一日",
+    "description": "特になし。",
+    "proposer": "荀攸",
+    "news_url": "",
+    "changes": {
+      "funds": -10,
+      "morale": 0,
+      "risk": -5
+    }
+  },
+  {
     "timestamp": "21:33",
     "title": "エラー",
     "description": "失敗",
@@ -326,13 +338,5 @@
       "morale": 5,
       "risk": 15
     }
-  },
-  {
-    "timestamp": "22:10",
-    "title": "魏ホールディングス創業",
-    "description": "システム稼働。",
-    "proposer": "システム",
-    "news_url": "",
-    "changes": {}
   }
 ]
