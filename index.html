@@ -224,9 +224,56 @@
                 list.innerHTML = "";
                 hData.forEach(item => {
                     if(item.description === "失敗") return; // 失敗ログを表示しない
-                    const div = document.createElement('div');
-                    div.className = 'log-item';
-                    let changes = "";
+                    // const div = document.createElement('div');
+                    // div.className = 'log-item';
+                    // let changes = "";
+                    hData.forEach(item => {
+                if(item.description === "失敗") return;
+                
+                const div = document.createElement('div');
+                div.className = 'log-item';
+
+                // ★ここを追加：タイトルに含まれる文字で色を分岐
+                let borderColor = "#e67e22"; // デフォルト（橙）
+                let titleColor = "#e67e22";  // デフォルト（橙）
+
+                if (item.title.includes("【勅命】")) {
+                    borderColor = "#f1c40f"; // 黄色
+                    titleColor = "#f1c40f";
+                } else if (item.title.includes("【監査】")) {
+                    borderColor = "#3498db"; // 青色
+                    titleColor = "#3498db";
+                } else if (item.title.includes("【流言】")) {
+                    borderColor = "#e74c3c"; // 赤色
+                    titleColor = "#e74c3c";
+                }
+
+                // ボーダー色を適用
+                div.style.borderLeftColor = borderColor;
+
+                let changes = "";
+                if(item.changes) {
+                    if(item.changes.funds) changes += `金${formatChange(item.changes.funds,'funds')} `;
+                    if(item.changes.morale) changes += `士${formatChange(item.changes.morale,'morale')} `;
+                    if(item.changes.risk) changes += `危${formatChange(item.changes.risk,'risk')} `;
+                }
+
+                div.innerHTML = `
+                    <div class="log-header">
+                        <span class="log-title" style="color:${titleColor}">⚡ ${item.title}</span>
+                        <span class="log-time">${item.timestamp}</span>
+                    </div>
+                    <div class="log-desc">
+                        <span style="background:#444; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:5px;">${item.proposer}</span>
+                        ${item.description}
+                        <div>${item.news_url ? `<a href="${item.news_url}" target="_blank" class="log-link">🔗 関連ニュース</a>` : ""}</div>
+                    </div>
+                    <div style="font-size:12px; margin-top:5px; border-top:1px dashed #444; padding-top:5px;">${changes}</div>`;
+                list.appendChild(div);
+            });
+
+
+
                     if(item.changes) {
                         if(item.changes.funds) changes += `金${formatChange(item.changes.funds,'funds')} `;
                         if(item.changes.morale) changes += `士${formatChange(item.changes.morale,'morale')} `;

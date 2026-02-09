@@ -162,6 +162,12 @@ def generate_intervention(action_type, state):
     data = extract_json(chat_generate(messages, max_tokens=500))
     if data and "changes" in data:
         data['proposer'] = "天の声"
+
+        # タイトルにタグを付与
+        prefix = {'rumor': '【流言】', 'audit': '【監査】', 'edict': '【勅命】'}.get(action_type, '')
+        # もしAIが勝手に絵文字をつけてきても、先頭にタグをつければ目立つ
+        data['title'] = prefix + " " + data['title']
+
         return data
     return {"title": "エラー", "description": "失敗", "proposer": "システム", "changes": {}}
 
