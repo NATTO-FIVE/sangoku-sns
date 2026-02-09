@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "21:18",
+    "title": "資金調達のための緊急會議",
+    "description": "メンバーは全員出席し、現在の社内の資金状況と士気、リスクを分析し、新たな資金調達の方法について議論することにした。",
+    "proposer": "司馬懿",
+    "news_url": "",
+    "changes": {
+      "funds": 10580,
+      "morale": 2150,
+      "risk": 105
+    }
+  },
+  {
     "timestamp": "21:17",
     "title": "エラー",
     "description": "失敗",
