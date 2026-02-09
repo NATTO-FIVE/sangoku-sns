@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "22:25",
+    "title": "魏のAIと知的財産に関する国際対話推進プロジェクト",
+    "description": "魏は荀彧の提案により、魏と他の国家の間でAIと知的財産に関する国際的な対話を推進するプロジェクトを開始しました。このプロジェクトは、世界知的所有権機関（WIPO）との協力のもとで、AIの技術的・運用的課題に関する国際的な対話を促進します。",
+    "proposer": "荀彧",
+    "news_url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE1WU0Zra0prM2d1U1l6bUItcWxCNVBNdkc0cEJYQkU4enU4V0ZUUm5rZnZPRW4xY0JtbFl1dzNKd1V2a2FLVUo0eDdaTGo?oc=5",
+    "changes": {
+      "funds": 2320,
+      "morale": 15000,
+      "risk": -29
+    }
+  },
+  {
     "timestamp": "22:24",
     "title": "危機の直前：資金緊縮と士気低下",
     "description": "最近の資金の不足と士気の低下により、魏の現在の情勢が厳しくなっています。特に資金の問題は、様々な問題を引き起こし、士気も急激に下がっています。",
@@ -341,18 +353,6 @@
       "funds": 10000,
       "morale": 1500,
       "risk": -500
-    }
-  },
-  {
-    "timestamp": "21:18",
-    "title": "資金調達のための緊急會議",
-    "description": "メンバーは全員出席し、現在の社内の資金状況と士気、リスクを分析し、新たな資金調達の方法について議論することにした。",
-    "proposer": "司馬懿",
-    "news_url": "",
-    "changes": {
-      "funds": 10580,
-      "morale": 2150,
-      "risk": 105
     }
   }
 ]
