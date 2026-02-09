@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "00:42",
+    "title": "【勅命】 皇帝の突然の命令",
+    "description": "曹操が突然、全軍を午後2時に集合させ、なぜかみんなが何をするべきかわからず困惑していた。",
+    "proposer": "天の声",
+    "news_url": "",
+    "changes": {
+      "funds": 0,
+      "morale": -3,
+      "risk": 2
+    }
+  },
+  {
     "timestamp": "23:37",
     "title": "資金難による緊急対策会議",
     "description": "現在の資金不足と士気低下を背景に、緊急会議を開催し、資金調達策と士気向上策を策定する。",
@@ -333,18 +345,6 @@
   },
   {
     "timestamp": "21:32",
-    "title": "平穏な一日",
-    "description": "特になし。",
-    "proposer": "荀攸",
-    "news_url": "",
-    "changes": {
-      "funds": -10,
-      "morale": 0,
-      "risk": -5
-    }
-  },
-  {
-    "timestamp": "21:23",
     "title": "平穏な一日",
     "description": "特になし。",
     "proposer": "荀攸",
