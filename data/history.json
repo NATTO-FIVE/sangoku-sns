@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "22:21",
+    "title": "資金短縮と士気低下への対策",
+    "description": "現在、社内の士気は高く保たれており、しかし資金的な問題が発生し、士気の維持に苦戦している。荀攸は、資金を節約し、士気を維持するための新たな対策を提案する。",
+    "proposer": "荀攸",
+    "news_url": "",
+    "changes": {
+      "funds": -300,
+      "morale": 1000,
+      "risk": 5
+    }
+  },
+  {
     "timestamp": "22:20",
     "title": "【監査】 謎の宴会",
     "description": "曹操が急に詩を読み始め、全員が徹夜させられた。",
@@ -334,17 +346,5 @@
     "proposer": "システム",
     "news_url": "",
     "changes": {}
-  },
-  {
-    "timestamp": "21:14",
-    "title": "平穏な一日",
-    "description": "特になし。",
-    "proposer": "荀攸",
-    "news_url": "",
-    "changes": {
-      "funds": -10,
-      "morale": 0,
-      "risk": -5
-    }
   }
 ]
