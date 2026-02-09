@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "22:09",
+    "title": "曹操の新規事業提案",
+    "description": "曹操は、社内の士気低下と資金不足の問題を解決するために、新規事業の提案を計画しています。新規事業は、農業と商業の融合を試み、新しい市場を開拓します。",
+    "proposer": "曹操",
+    "news_url": "",
+    "changes": {
+      "funds": -3000,
+      "morale": 2000,
+      "risk": 20
+    }
+  },
+  {
     "timestamp": "22:07",
     "title": "【監査】 謎の宴会",
     "description": "曹操が急に詩を読み始め、全員が徹夜させられた。",
@@ -330,13 +342,5 @@
       "morale": -500,
       "risk": 200
     }
-  },
-  {
-    "timestamp": "23:29",
-    "title": "エラー",
-    "description": "失敗",
-    "proposer": "システム",
-    "news_url": "",
-    "changes": {}
   }
 ]
