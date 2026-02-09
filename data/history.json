@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "08:24",
+    "title": "紫鸞によるAI技術導入戦略",
+    "description": "魏の紫鸞は、Googleの生成AI技術を導入し、新しい戦略を策定。これにより、資金が低下、士気を上げ、リスクを低減する戦略を提案する。",
+    "proposer": "紫鸞",
+    "news_url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1NMXVmb29vdTVzQUJESVJZYnZ3aG1yTmc2d0VicmVSd01tMGVZcXJ6emF1S1ZCczlzck52bFkycG5rb29Gejk5MXNNZWsxUll2WlB0cGw0dUhIZnVwYTNWNlkxdDZFbEZfY1E?oc=5",
+    "changes": {
+      "funds": -7500,
+      "morale": 333,
+      "risk": 296
+    }
+  },
+  {
     "timestamp": "07:17",
     "title": "資金不足対策と士気低下への対応",
     "description": "最近の突飛な新規事業や宴会などによる資金の急激な消耗と士気の低下に憂慮し、全体の対策を講じるため、全社員が集まり対策を話し合うこととした。",
@@ -345,18 +357,6 @@
       "funds": 10000,
       "morale": 1000,
       "risk": 50
-    }
-  },
-  {
-    "timestamp": "22:03",
-    "title": "郭嘉の新たな戦略策定により、資金とリスクを改善",
-    "description": "郭嘉は魏の軍事と政治の戦略を強化し、新たな戦略を提案します。これらの戦略は、曹操と荀彧の現在の戦略に加えて、新たな戦略を提供します。",
-    "proposer": "郭嘉",
-    "news_url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxORndaSkRxV1JlYzVPQ1BucjM5X2tvUzBGRXJRcGtWelVXVFhmQ0hnelJvRGRWcVhYcExaTXBEYmR6Z2tybkpaSmNCZU1qZ2RBcnNnMFkxR0owSC1NR3RYUzdwVzBLMW9IaTZ3STBnM25JRHl3Sm5pRjZiMTBBekhtdHJ4WQ?oc=5",
-    "changes": {
-      "funds": 20000,
-      "morale": 15000,
-      "risk": 200
     }
   }
 ]
