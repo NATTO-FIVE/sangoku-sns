@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "22:07",
+    "title": "【監査】 謎の宴会",
+    "description": "曹操が急に詩を読み始め、全員が徹夜させられた。",
+    "proposer": "天の声",
+    "news_url": "",
+    "changes": {
+      "funds": -100,
+      "morale": -5,
+      "risk": 0
+    }
+  },
+  {
     "timestamp": "22:06",
     "title": "平穏な一日",
     "description": "特になし。",
@@ -326,17 +338,5 @@
     "proposer": "システム",
     "news_url": "",
     "changes": {}
-  },
-  {
-    "timestamp": "22:55",
-    "title": "曹操の突飛な新規事業提案",
-    "description": "曹操は社内で突飛な新規事業の提案を行い、社内の士気を大きく揺さぶる。",
-    "proposer": "曹操",
-    "news_url": "",
-    "changes": {
-      "funds": -1500,
-      "morale": -100,
-      "risk": 200
-    }
   }
 ]
