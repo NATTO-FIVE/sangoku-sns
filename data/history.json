@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "22:15",
+    "title": "曹操の急進派の挑戦",
+    "description": "曹操は急進派を立ち上げ、現在の体制を変えることを提案しました。新体制では、曹操の意見が優先され、他のメンバーの影響力が減少します。また、新体制は資金の大幅な削減と士気の低下を招く見込みです。",
+    "proposer": "曹操",
+    "news_url": "",
+    "changes": {
+      "funds": -100,
+      "morale": -200,
+      "risk": 25
+    }
+  },
+  {
     "timestamp": "22:13",
     "title": "資金と士気向上プロジェクト",
     "description": "資金と士気を向上させるためのプロジェクトを開始します。資金は輸入車の輸入と士気は最新AI技術とユニーク装備を提供することで向上させます。",
@@ -333,18 +345,6 @@
       "funds": -2000,
       "morale": 500,
       "risk": 50
-    }
-  },
-  {
-    "timestamp": "00:14",
-    "title": "魏軍製品品質向上プロジェクト",
-    "description": "曹操は荀彧の提案で、魏軍の製品品質向上と生産性の向上に取り組むことを決定した。荀彧はAI技術を活用し、軍事製品の品質と生産性を向上させるプロジェクトを提案した。",
-    "proposer": "荀彧",
-    "news_url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5qWGRiUENnYU9fOUcyOWE2Rk55RG02Y05qYVRrVml6QXV0SFFuT0lrN0wzUWhSNXNqZzNDa181RHplSHdBZ0dJdW5Ka2xZNjZkOV96SC1ORC1yVWZWaEh0U0hQMl9xeGRhbklXMQ?oc=5",
-    "changes": {
-      "funds": 2000,
-      "morale": 500,
-      "risk": -100
     }
   }
 ]
