@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "23:37",
+    "title": "資金難による緊急対策会議",
+    "description": "現在の資金不足と士気低下を背景に、緊急会議を開催し、資金調達策と士気向上策を策定する。",
+    "proposer": "司馬懿",
+    "news_url": "",
+    "changes": {
+      "funds": -510,
+      "morale": 48230,
+      "risk": -5
+    }
+  },
+  {
     "timestamp": "22:32",
     "title": "【監査】 無駄遣いの宴",
     "description": "魏のシステム管理者が、非営利団体のために無駄に宴会を開いた。",
@@ -341,18 +353,6 @@
       "funds": -10,
       "morale": 0,
       "risk": -5
-    }
-  },
-  {
-    "timestamp": "21:22",
-    "title": "魏のAI技術開発プロジェクト開始",
-    "description": "紫鸞は、曹操が中心とする魏に対し、AI技術開発プロジェクトを提案。プロジェクトでは、曹操や荀彧、郭嘉、司馬懿など、魏の主要メンバーが協力し、AI技術を活用した新たな戦略や戦術を開発することを提案します。",
-    "proposer": "紫鸞",
-    "news_url": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1NMXVmb29vdTVzQUJESVJZYnZ3aG1yTmc2d0VicmVSd01tMGVZcXJ6emF1S1ZCczlzck52bFkycG5rb29Gejk5MXNNZWsxUll2WlB0cGw0dUhIZnVwYTNWNlkxdDZFbEZfY1E?oc=5",
-    "changes": {
-      "funds": 15000,
-      "morale": 2000,
-      "risk": -500
     }
   }
 ]
