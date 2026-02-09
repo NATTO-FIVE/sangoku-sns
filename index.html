@@ -164,7 +164,7 @@
     
         // データの読み込みと画面更新
         async function updateDashboard() {
-            // 時刻を混ぜることでブラウザの古いキャッシュ（23:50等）を強制回避
+            // 時刻を混ぜることでブラウザの古いキャッシュを強制回避
             const ts = new Date().getTime(); 
             
             try {
@@ -223,65 +223,44 @@
                 const list = document.getElementById('log-list');
                 list.innerHTML = "";
                 
-                // index.html の updateDashboard 関数内
-            
-            hData.forEach(item => {
-                if(item.description === "失敗") return; // 失敗ログを表示しない
-                
-                const div = document.createElement('div');
-                div.className = 'log-item';
+                hData.forEach(item => {
+                    if(item.description === "失敗") return; // 失敗ログを表示しない
+                    
+                    const div = document.createElement('div');
+                    div.className = 'log-item';
 
-                // ★ここから：タイトルに応じた色分け処理
-                let borderColor = "#e67e22"; // デフォルト（オレンジ）
-                let titleColor = "#e67e22";
+                    // ★ここから：タイトルに応じた色分け処理
+                    let borderColor = "#e67e22"; // デフォルト（オレンジ）
+                    let titleColor = "#e67e22";
 
-                // タイトルに含まれる文字で判定
-                if (item.title.includes("【勅命】")) {
-                    borderColor = "#f1c40f"; // 黄色
-                    titleColor = "#f1c40f";
-                } else if (item.title.includes("【監査】")) {
-                    borderColor = "#3498db"; // 青色
-                    titleColor = "#3498db";
-                } else if (item.title.includes("【流言】")) {
-                    borderColor = "#e74c3c"; // 赤色
-                    titleColor = "#e74c3c";
-                }
+                    // タイトルに含まれる文字で判定
+                    if (item.title.includes("【勅命】")) {
+                        borderColor = "#f1c40f"; // 黄色
+                        titleColor = "#f1c40f";
+                    } else if (item.title.includes("【監査】")) {
+                        borderColor = "#3498db"; // 青色
+                        titleColor = "#3498db";
+                    } else if (item.title.includes("【流言】")) {
+                        borderColor = "#e74c3c"; // 赤色
+                        titleColor = "#e74c3c";
+                    }
 
-                // 左側の太い線の色を変更
-                div.style.borderLeftColor = borderColor;
+                    // 左側の太い線の色を変更
+                    div.style.borderLeftColor = borderColor;
 
-                let changes = "";
-                if(item.changes) {
-                    if(item.changes.funds) changes += `金${formatChange(item.changes.funds,'funds')} `;
-                    if(item.changes.morale) changes += `士${formatChange(item.changes.morale,'morale')} `;
-                    if(item.changes.risk) changes += `危${formatChange(item.changes.risk,'risk')} `;
-                }
-
-                // タイトル文字色（style="color:..."）も反映
-                div.innerHTML = `
-                    <div class="log-header">
-                        <span class="log-title" style="color: ${titleColor}">⚡ ${item.title}</span>
-                        <span class="log-time">${item.timestamp}</span>
-                    </div>
-                    <div class="log-desc">
-                        <span style="background:#444; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:5px;">${item.proposer}</span>
-                        ${item.description}
-                        <div>${item.news_url ? `<a href="${item.news_url}" target="_blank" class="log-link">🔗 関連ニュース</a>` : ""}</div>
-                    </div>
-                    <div style="font-size:12px; margin-top:5px; border-top:1px dashed #444; padding-top:5px;">${changes}</div>`;
-                list.appendChild(div);
-            });
-
-
-
-
+                    let changes = "";
                     if(item.changes) {
                         if(item.changes.funds) changes += `金${formatChange(item.changes.funds,'funds')} `;
                         if(item.changes.morale) changes += `士${formatChange(item.changes.morale,'morale')} `;
                         if(item.changes.risk) changes += `危${formatChange(item.changes.risk,'risk')} `;
                     }
+
+                    // タイトル文字色（style="color:..."）も反映
                     div.innerHTML = `
-                        <div class="log-header"><span class="log-title">⚡ ${item.title}</span><span class="log-time">${item.timestamp}</span></div>
+                        <div class="log-header">
+                            <span class="log-title" style="color: ${titleColor}">⚡ ${item.title}</span>
+                            <span class="log-time">${item.timestamp}</span>
+                        </div>
                         <div class="log-desc">
                             <span style="background:#444; color:#fff; padding:1px 5px; border-radius:3px; font-size:10px; margin-right:5px;">${item.proposer}</span>
                             ${item.description}
@@ -299,7 +278,7 @@
         async function sendAction(type) {
             // トークンを分割してGitHubの検知を回避
             const p1 = "ghp_neqY4UXxHhPLaoF";
-            const p2 = "SW2uVPdi7suYX2A2B77Yz"; // 大文字のPを小文字に修正
+            const p2 = "SW2uVPdi7suYX2A2B77Yz"; 
             const TOKEN = p1 + p2;
     
             const GITHUB_USER = "NATTO-FIVE";
@@ -331,9 +310,8 @@
     
         // 初回実行
         updateDashboard();
-        // 30秒間隔でチェック（テストのため少し早めました）
-        // setInterval(updateDashboard, 600000); // 10分
-        setInterval(updateDashboard, 10000); // 10sec
+        // 10秒間隔でチェック
+        setInterval(updateDashboard, 10000); 
     </script>
 </body>
 </html>

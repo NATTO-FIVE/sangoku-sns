@@ -293,12 +293,19 @@ def simulation_loop():
             with open(HISTORY_FILE, "w", encoding="utf-8") as f: json.dump(current_history, f, indent=2, ensure_ascii=False)
 
             # --- 💾 自動送信 (判定を甘くして確実に送る) ---
+            
             print("📤 更新データを送信中...")
             subprocess.run(["git", "add", "data/*.json"], check=False)
             subprocess.run(["git", "commit", "-m", f"📊 Update {datetime.datetime.now().strftime('%H:%M')}"], check=False)
+            
+            # ★ ここに追加：Pushする直前に、もう一度最新情報を吸い上げて合体させる
+            print("🔄 送信直前に最新データを統合中...")
+            subprocess.run(["git", "pull", "origin", "main", "--rebase"], check=False)
+
             subprocess.run(["git", "push", "origin", "main"], check=False)
         
         print(f"✅ 更新完了。次の更新まで {SLEEP_TIME // 60} 分待機します。")
+
         time.sleep(SLEEP_TIME)
 
 # --- 🌍 Webサーバー ---
