@@ -5,7 +5,7 @@ MODEL_PATH = "./models/qwen2.5-3b-instruct-q4_k_m.gguf"
 DATA_FILE = "./data/company_status.json"
 HISTORY_FILE = "./data/history.json"
 PORT = 8000
-SLEEP_TIME = 3600 #3600  # 1時間間隔
+SLEEP_TIME = 30 #3600  # 1時間間隔
 
 # 初期ステータス
 INITIAL_STATE = {

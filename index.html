@@ -284,7 +284,8 @@
         // 初回実行
         updateDashboard();
         // 30秒間隔でチェック（テストのため少し早めました）
-        setInterval(updateDashboard, 600000); 
+        // setInterval(updateDashboard, 600000); // 10分
+        setInterval(updateDashboard, 10000); // 10sec
     </script>
 </body>
 </html>
