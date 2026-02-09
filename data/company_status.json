@@ -5,15 +5,43 @@
   "rating": "危険",
   "reputation": "炎上中🔥",
   "comments": {
-    "曹操": "わしらは失敗は無い！",
-    "荀彧": "え？ これ、空箱ジョークじゃないの？",
-    "郭嘉": "これでやるか!バグ乙のエラーも許さん!",
-    "司馬懿": "特定しました！",
+    "曹操": "わしらの勝ち！課金しろ！",
+    "荀彧": "失敗のサビ残確定。無理ゲーです。",
+    "郭嘉": "え？ これバグ乙の件か？",
+    "司馬懿": "爆死ｗ",
     "荀攸": "了解",
-    "賈詡": "失敗したら損切りだ！",
-    "紫鸞": "アグリー！フィジビリ確認！"
+    "賈詡": "コスパ最悪の結果、損切りで。",
+    "紫鸞": "アグリー！これ、大失策だった。"
   },
   "sns": [
+    {
+      "name": "異民族の商人",
+      "id": "@silk_road",
+      "content": "挑戦は失敗からの学び。",
+      "is_vip": false,
+      "timestamp": "21:17"
+    },
+    {
+      "name": "肉屋の親父",
+      "id": "@meat_love",
+      "content": "失敗は学びの始まり！",
+      "is_vip": false,
+      "timestamp": "21:17"
+    },
+    {
+      "name": "洛陽のJK",
+      "id": "@rakuyo_gal",
+      "content": "失敗は学びの始まり！💪",
+      "is_vip": false,
+      "timestamp": "21:17"
+    },
+    {
+      "name": "美周郎",
+      "id": "@fire_artist",
+      "content": "試行錯誤は成長の糧よ！",
+      "is_vip": true,
+      "timestamp": "21:17"
+    },
     {
       "name": "洛陽のJK",
       "id": "@rakuyo_gal",
@@ -195,34 +223,6 @@
       "content": "ニュースでAIニュースキャスター？これ新時代？🤔",
       "is_vip": false,
       "timestamp": "00:12"
-    },
-    {
-      "name": "異民族の商人",
-      "id": "@silk_road",
-      "content": "魏の新番組！AIで再現する田村淳のニュース。戦略と政治家の話題解説。土曜日らしく！",
-      "is_vip": false,
-      "timestamp": "00:12"
-    },
-    {
-      "name": "洛陽のJK",
-      "id": "@rakuyo_gal",
-      "content": "曹操大将新戦略で危機乗り越え！",
-      "is_vip": false,
-      "timestamp": "00:07"
-    },
-    {
-      "name": "異民族の商人",
-      "id": "@silk_road",
-      "content": "曹操、新たな戦略提案！危機管理と財政健全化へ。",
-      "is_vip": false,
-      "timestamp": "00:07"
-    },
-    {
-      "name": "儒学者",
-      "id": "@confucius_say",
-      "content": "曹操新政略、危機克服 & 資金再建!",
-      "is_vip": false,
-      "timestamp": "00:07"
     }
   ]
 }

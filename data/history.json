@@ -1,5 +1,13 @@
 [
   {
+    "timestamp": "21:17",
+    "title": "エラー",
+    "description": "失敗",
+    "proposer": "システム",
+    "news_url": "",
+    "changes": {}
+  },
+  {
     "timestamp": "21:16",
     "title": "エラー",
     "description": "失敗",
