@@ -222,21 +222,20 @@
                 
                 const list = document.getElementById('log-list');
                 list.innerHTML = "";
-                hData.forEach(item => {
-                    if(item.description === "失敗") return; // 失敗ログを表示しない
-                    // const div = document.createElement('div');
-                    // div.className = 'log-item';
-                    // let changes = "";
-                    hData.forEach(item => {
-                if(item.description === "失敗") return;
+                
+                // index.html の updateDashboard 関数内
+            
+            hData.forEach(item => {
+                if(item.description === "失敗") return; // 失敗ログを表示しない
                 
                 const div = document.createElement('div');
                 div.className = 'log-item';
 
-                // ★ここを追加：タイトルに含まれる文字で色を分岐
-                let borderColor = "#e67e22"; // デフォルト（橙）
-                let titleColor = "#e67e22";  // デフォルト（橙）
+                // ★ここから：タイトルに応じた色分け処理
+                let borderColor = "#e67e22"; // デフォルト（オレンジ）
+                let titleColor = "#e67e22";
 
+                // タイトルに含まれる文字で判定
                 if (item.title.includes("【勅命】")) {
                     borderColor = "#f1c40f"; // 黄色
                     titleColor = "#f1c40f";
@@ -248,7 +247,7 @@
                     titleColor = "#e74c3c";
                 }
 
-                // ボーダー色を適用
+                // 左側の太い線の色を変更
                 div.style.borderLeftColor = borderColor;
 
                 let changes = "";
@@ -258,9 +257,10 @@
                     if(item.changes.risk) changes += `危${formatChange(item.changes.risk,'risk')} `;
                 }
 
+                // タイトル文字色（style="color:..."）も反映
                 div.innerHTML = `
                     <div class="log-header">
-                        <span class="log-title" style="color:${titleColor}">⚡ ${item.title}</span>
+                        <span class="log-title" style="color: ${titleColor}">⚡ ${item.title}</span>
                         <span class="log-time">${item.timestamp}</span>
                     </div>
                     <div class="log-desc">
@@ -271,6 +271,7 @@
                     <div style="font-size:12px; margin-top:5px; border-top:1px dashed #444; padding-top:5px;">${changes}</div>`;
                 list.appendChild(div);
             });
+
 
 
 

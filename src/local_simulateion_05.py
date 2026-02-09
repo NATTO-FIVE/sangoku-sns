@@ -150,26 +150,51 @@ def generate_event(state):
         return data
     return {"title": "平穏な一日", "description": "特になし。", "proposer": "荀攸", "changes": {"funds": -10, "morale": 0, "risk": -5}, "news_url": ""}
 
+# local_simulateion_05.py の generate_intervention 関数を修正
+
 def generate_intervention(action_type, state):
     print(f"⚡ 介入イベント生成中: {action_type}")
-    system_prompt = {
-        'rumor': 'あなたは悪徳広告代理店。魏のための嘘八百なヤラセ広告をJSONで考えろ。',
-        'audit': 'あなたは内部監査員。誰かの笑える不正を報告せよ。',
-        'edict': 'あなたは気まぐれな皇帝。理不尽な命令を与えよ。'
+    
+    # 指示を具体化し、JSON形式を厳守させる
+    base_prompt = "あなたは魏のシステム管理者。以下の指示に従い、必ずJSON形式のみを出力せよ。余計な会話は一切禁止。"
+    
+    scenario = {
+        'rumor': 'あなたは悪徳広告代理店。魏のための嘘八百なヤラセ広告や、敵国のネガティブキャンペーンを考えろ。',
+        'audit': 'あなたは内部監査員。誰かの笑える不正、またはとんでもない無駄遣いを報告せよ。',
+        'edict': 'あなたは気まぐれな皇帝。理不尽な命令、または突拍子もない思い付きを与えよ。'
     }.get(action_type, '')
 
-    messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": "生成せよ"}]
+    # 出力例を提示してAIを誘導する
+    example = '''
+    出力例:
+    {
+        "title": "謎の宴会",
+        "description": "曹操が急に詩を読み始め、全員が徹夜させられた。",
+        "changes": {"funds": -100, "morale": -5, "risk": 0}
+    }
+    '''
+
+    system_prompt = f"{base_prompt}\n設定: {scenario}\n{example}"
+    messages = [{"role": "system", "content": system_prompt}, {"role": "user", "content": "今すぐ生成せよ"}]
+    
+    # 生成実行
     data = extract_json(chat_generate(messages, max_tokens=500))
+    
     if data and "changes" in data:
         data['proposer'] = "天の声"
-
-        # タイトルにタグを付与
+        
+        # ★ここでタイトルに【タグ】を強制付与
         prefix = {'rumor': '【流言】', 'audit': '【監査】', 'edict': '【勅命】'}.get(action_type, '')
-        # もしAIが勝手に絵文字をつけてきても、先頭にタグをつければ目立つ
-        data['title'] = prefix + " " + data['title']
-
+        
+        # AIが勝手にタグをつけている場合を考慮して、重複しないように結合
+        if prefix not in data['title']:
+            data['title'] = f"{prefix} {data['title']}"
+        
         return data
-    return {"title": "エラー", "description": "失敗", "proposer": "システム", "changes": {}}
+        
+    # それでも失敗した場合
+    print("⚠️ JSON生成失敗。エラーログを記録します。")
+    return {"title": "通信エラー", "description": "天の声が届かなかったようだ...（再試行してください）", "proposer": "システム", "changes": {}}
 
 def update_ministers_comments(state, event_data):
     print("💬 武将コメント...")
