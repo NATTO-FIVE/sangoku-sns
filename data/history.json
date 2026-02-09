@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "22:19",
+    "title": "平穏な一日",
+    "description": "特になし。",
+    "proposer": "荀攸",
+    "news_url": "",
+    "changes": {
+      "funds": -10,
+      "morale": 0,
+      "risk": -5
+    }
+  },
+  {
     "timestamp": "22:18",
     "title": "【流言】 魏の勝利の秘密",
     "description": "魏軍が突然の奇襲で曹軍を圧倒し、全勝態勢に。曹操の反撃は予想外の展開で、魏の秘密戦略が明らかに。",
@@ -333,18 +345,6 @@
       "funds": 3000,
       "morale": 700,
       "risk": 50
-    }
-  },
-  {
-    "timestamp": "21:04",
-    "title": "AIと知的財産に関する国際協力プロジェクト開始",
-    "description": "魏がAIと知的財産に関する国際的な協力を促進するプロジェクトを開始する。これにより、新たな知識資産を生み出す可能性を高め、魏の資金と士気を向上させる。",
-    "proposer": "曹操",
-    "news_url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE1WU0Zra0prM2d1U1l6bUItcWxCNVBNdkc0cEJYQkU4enU4V0ZUUm5rZnZPRW4xY0JtbFl1dzNKd1V2a2FLVUo0eDdaTGo?oc=5",
-    "changes": {
-      "funds": 500,
-      "morale": 300,
-      "risk": 100
     }
   }
 ]
