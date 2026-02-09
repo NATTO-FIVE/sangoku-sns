@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "21:36",
+    "title": "財政危機への対応",
+    "description": "魏の軍資金が急激に減少し、士気も低下。新規事業のリスクが高まっている状況下、最適な財政管理と士気維持策を検討するための委員会を開催する。",
+    "proposer": "司馬懿",
+    "news_url": "",
+    "changes": {
+      "funds": -1000,
+      "morale": -100,
+      "risk": 150
+    }
+  },
+  {
     "timestamp": "21:34",
     "title": "平穏な一日",
     "description": "特になし。",
@@ -325,18 +337,6 @@
       "funds": 2000,
       "morale": 10,
       "risk": 20
-    }
-  },
-  {
-    "timestamp": "22:11",
-    "title": "郭嘉の新規事業提案",
-    "description": "郭嘉は急いで新たなビジネスチャンスを提案し、資金を増やす計画を示唆。しかし、曹操の反対に遭う。",
-    "proposer": "郭嘉",
-    "news_url": "",
-    "changes": {
-      "funds": 1500,
-      "morale": 5,
-      "risk": 15
     }
   }
 ]
