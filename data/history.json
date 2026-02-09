@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "22:03",
+    "title": "郭嘉の新たな戦略策定により、資金とリスクを改善",
+    "description": "郭嘉は魏の軍事と政治の戦略を強化し、新たな戦略を提案します。これらの戦略は、曹操と荀彧の現在の戦略に加えて、新たな戦略を提供します。",
+    "proposer": "郭嘉",
+    "news_url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxORndaSkRxV1JlYzVPQ1BucjM5X2tvUzBGRXJRcGtWelVXVFhmQ0hnelJvRGRWcVhYcExaTXBEYmR6Z2tybkpaSmNCZU1qZ2RBcnNnMFkxR0owSC1NR3RYUzdwVzBLMW9IaTZ3STBnM25JRHl3Sm5pRjZiMTBBekhtdHJ4WQ?oc=5",
+    "changes": {
+      "funds": 20000,
+      "morale": 15000,
+      "risk": 200
+    }
+  },
+  {
     "timestamp": "22:01",
     "title": "【流言】 曹操作戰勝利",
     "description": "曹操は孫權の軍を大勝利で打ち破り、魏の威信を一層高めた。",
@@ -325,18 +337,6 @@
       "funds": 2000,
       "morale": 10,
       "risk": 25
-    }
-  },
-  {
-    "timestamp": "22:16",
-    "title": "内紛対策本部設置",
-    "description": "曹操の支持者が郭嘉と対立し、本部内に対抗派の対策本部を設置。士気低下と資金流失を防ぐため、内部対策を開始する。",
-    "proposer": "荀彧",
-    "news_url": "",
-    "changes": {
-      "funds": -500,
-      "morale": -10,
-      "risk": 10
     }
   }
 ]
