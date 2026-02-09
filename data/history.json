@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "21:19",
+    "title": "魏のAI知的財産保護協議会",
+    "description": "魏は、AIの進化を伴う新たな知的財産保護の課題に直面しています。そこで、本イベントは、AIに関する技術的・運用的課題について議論し、新たな保護制度を構築するための国際的な対話を促進します。これにより、魏の財政・士気・リスクの改善が期待されます。",
+    "proposer": "紫鸞",
+    "news_url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE1WU0Zra0prM2d1U1l6bUItcWxCNVBNdkc0cEJYQkU4enU4V0ZUUm5rZnZPRW4xY0JtbFl1dzNKd1V2a2FLVUo0eDdaTGo?oc=5",
+    "changes": {
+      "funds": 10000,
+      "morale": 1500,
+      "risk": -500
+    }
+  },
+  {
     "timestamp": "21:18",
     "title": "資金調達のための緊急會議",
     "description": "メンバーは全員出席し、現在の社内の資金状況と士気、リスクを分析し、新たな資金調達の方法について議論することにした。",
