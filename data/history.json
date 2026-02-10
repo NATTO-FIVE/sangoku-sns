@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "17:36",
+    "title": "曹操の挑戦：資金調達と士気維持の試み",
+    "description": "今、魏の資金と士気が低下しており、新たな資金源や士気向上策を求めている。郭嘉と荀彧は曹操の提案を支持するが、他のメンバーからは疑問符が上がる。",
+    "proposer": "曹操",
+    "news_url": "",
+    "changes": {
+      "funds": -100000,
+      "morale": 0,
+      "risk": -20000
+    }
+  },
+  {
     "timestamp": "16:35",
     "title": "財政難対策と士気低下の対応策",
     "description": "現在、財政が逼迫し、士気も低下しています。郭嘉はこれらの問題を解決するための提案を行います。",
@@ -345,18 +357,6 @@
       "funds": -100,
       "morale": -200,
       "risk": 25
-    }
-  },
-  {
-    "timestamp": "22:13",
-    "title": "資金と士気向上プロジェクト",
-    "description": "資金と士気を向上させるためのプロジェクトを開始します。資金は輸入車の輸入と士気は最新AI技術とユニーク装備を提供することで向上させます。",
-    "proposer": "荀彧",
-    "news_url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE96d20wekVzaGtHcmp1YUF1TjFfWGlHTHkxNXdqaHFZenIwT0Nlblh3ZXB3MzBKbURWOFdJQ3BuZVJYYUNhaEpQbkpySjZkQzR6ZTVzanJ5d0loaTV1VTNlMlZhcy1iZ0hCUm40b1dDVQ?oc=5",
-    "changes": {
-      "funds": -50,
-      "morale": 100,
-      "risk": -5
     }
   }
 ]
