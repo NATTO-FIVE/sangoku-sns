@@ -1,5 +1,17 @@
 [
   {
+    "timestamp": "19:21",
+    "title": "郭嘉の戦略策定プロジェクト",
+    "description": "郭嘉は現在の状況を詳細に分析し、新たな戦略を策定しました。この戦略は資金、士気、リスクのバランスを改善するための重要な変更を伴います。",
+    "proposer": "郭嘉",
+    "news_url": "https://news.google.com/rss/articles/CBMigAJBVV95cUxOM09VYmRJSUc1TnJzX1gxOWs4bE1BMFBMNWcycG9VSzVIN2Y2aGNCNFVlYVJ4dlllcFhoRVpxeHd2UXBMUEtMcFBON0l6ZU0zWTVjUWJNWWQzT2dhSkkyRUcyVEczUDVieEVjc2cxdVF6TlpwajhkM2g0aXV4amhka3hNaFloWVo3Q1VVS2xEaS1NRXNNM1d0RWw3eG5tNkJCMWVjcXhFZlZVX3FOeGh4WjRKU2Zld1Q3N3A1RExkVi1xMldMWDFDQ2M3XzJxWFA5d3dXZ3VTaXJnaEp5bHFxTmxXSDZJRWhHMlUyZEpNTFJvcU9ranpVRHhaaWdIdGIw?oc=5",
+    "changes": {
+      "funds": 2000,
+      "morale": 1000,
+      "risk": 1000
+    }
+  },
+  {
     "timestamp": "19:37",
     "title": "郭嘉の提案：軍資金増強計画",
     "description": "郭嘉は魏の社内で資金不足を深刻視し、新たな軍資金増強計画を提案しました。現在の資金状況は310200で、士気は302354、リスクは64908です。",
@@ -345,18 +357,6 @@
       "funds": -50,
       "morale": 10,
       "risk": 0
-    }
-  },
-  {
-    "timestamp": "22:17",
-    "title": "荀彧の提案による資金調整と士気向上プログラム",
-    "description": "荀彧は、現状の低士気と資金不足を解消するための提案を提出しました。新規事業への投資ではなく、現在のメンバーの士気と財政を重点的に向上させるためのプログラムを提案しました。",
-    "proposer": "荀彧",
-    "news_url": "",
-    "changes": {
-      "funds": -100,
-      "morale": 100,
-      "risk": -20
     }
   }
 ]
